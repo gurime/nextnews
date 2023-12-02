@@ -7,16 +7,15 @@ import Link from 'next/link'
 
 
 async function getArticles() {
-const parentId = 'KTI0m27QB8Ny7NEwt44s'; 
-const subcollectionName = 'Feature_Home_Article';
-const querySnapshot = await getDocs(collection(db, 'article', parentId, subcollectionName));
-const data = [];
-querySnapshot.forEach((doc) => {
-data.push({ id: doc.id, ...doc.data() });
-});
-return data;
-}
-
+  const querySnapshot = await getDocs(collection(db , "Feature_Home_Article"));
+  const data = [];
+  
+  querySnapshot.forEach((doc) => {
+  data.push({ id: doc.id, ...doc.data() });
+  });
+  
+  return data;
+  }
 
 
 export default function FeatureArticle() {
@@ -72,7 +71,7 @@ display: 'flex',
 placeItems: 'center',
 justifyContent: 'space-between',
 }}>
-<Link href={`/Articles/${post.id}`} className="hero-btn">
+<Link href={`/HomeFeatureDetails/${post.id}`} className="hero-btn">
 Read More
 </Link>
 {post.date}

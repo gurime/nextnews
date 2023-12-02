@@ -1,66 +1,61 @@
-import { db } from '@/app/Config/firebase';
+import { db } from '@/app/Config/firebase'
 import Footer from '@/app/components/Footer'
 import Navbar from '@/app/components/Navbar'
 import Goback from '@/app/components/goback'
 import Goup from '@/app/components/goup'
-import { doc, getDoc } from 'firebase/firestore';
-
+import { doc, getDoc } from 'firebase/firestore'
+import React from 'react'
 
 
 export async function generateMetadata({ params }) {
 
-const docRef = doc(db, 'article', params.id);
-
-try {
-const docSnap = await getDoc(docRef);
-    
-if (docSnap.exists()) {
-const post = docSnap.data();
-
-return {
-title: `iTruth News| ${post?.title || 'Page Not Found'}`
-};
-} else {
-return {
-title: 'iTruth News | Page Not Found'
-};
-}
-} catch (error) {
-console.error('Error getting document:', error);
-return {
-title: 'iTruth News | Page Not Found'
-};
-}
-}
-
-
-async function getArticle(id) {
-
-const articleRef = doc(db, 'article', id);
-try {
-const docSnap = await getDoc(articleRef);
-if (docSnap.exists()) {
-return docSnap.data();
-} else {
+  const docRef = doc(db, 'Feature_Home_Article', params.id);
+  
+  try {
+  const docSnap = await getDoc(docRef);
       
-console.error('Document not found');
-return null;
-}
-} catch (error) {
-console.error('Error getting document:', error);
-// Handle error as needed
-return null;
-}
-}
+  if (docSnap.exists()) {
+  const post = docSnap.data();
+  
+  return {
+  title: `iTruth News| ${post?.title || 'Page Not Found'}`
+  };
+  } else {
+  return {
+  title: 'iTruth News | Page Not Found'
+  };
+  }
+  } catch (error) {
+  console.error('Error getting document:', error);
+  return {
+  title: 'iTruth News | Page Not Found'
+  };
+  }
+  }
+  
+  
+  async function getArticle(id) {
+  
+  const articleRef = doc(db, 'Feature_Home_Article', id);
+  try {
+  const docSnap = await getDoc(articleRef);
+  if (docSnap.exists()) {
+  return docSnap.data();
+  } else {
+        
+  console.error('Document not found');
+  return null;
+  }
+  } catch (error) {
+  console.error('Error getting document:', error);
+  // Handle error as needed
+  return null;
+  }
+  }
 
-
-
-export default async function HomeDetailsPage({params}) {
+export default async function DetailsPage({params}) {
 const post = await getArticle(params.id)
-if (!post) {
-    return <div>Article not found</div>;
-    }
-    
+
 return (
 <>
 <Navbar />
@@ -121,6 +116,7 @@ alt="..."
 <p>{post.content6}</p>
 <p>{post.content7}</p>
 <p>{post.content8}</p>
+
 
 </div>
 {/* <CommentForm/> */}
