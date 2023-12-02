@@ -18,7 +18,7 @@ async function getArticles() {
   }
 
 
-export default function FeatureArticle() {
+export default function HomeFeatureArticle() {
 const [fetchError, setFetchError] = useState(null);
 const [loading, setLoading] = useState(true);
 const [useArticle, setUseArticle] = useState([]);
