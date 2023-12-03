@@ -13,8 +13,7 @@ import { db } from "../Config/firebase"
 async function getArticle(searchTerm) {
 try {
 // Specify the collections to search in
-const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle',
-'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle', 'HeadlineMusicArticle'
+const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle'
 ];
 
 // Fetch documents from each collection in parallel
@@ -79,10 +78,10 @@ const collectionRoutes = {
 article: '/Articles',
 Feature_Home_Article: '/HomeFeatureDetails',
 HomeOpinionArticle: '/HomeOpinionDetails',
-FeatureTechArticle: '/Technology/FeatureTechDetails',
-HeadlineTechArticle: '/Technology/HeadlineTechDetails',
-FeatureMusicArticle: '/Music/FeatureMusicDetails',
-HeadlineMusicArticle: '/Music/HeadlineMusicDetails'
+FeatureTechArticle: '/pages/Technology/FeatureTechDetails',
+HeadlineTechArticle: '/pages/Technology/HeadlineTechDetails',
+FeatureMusicArticle: '/pages/Music/FeatureMusicDetails',
+HeadlineMusicArticle: '/pages/Music/HeadlineMusicDetails',
 };
 
 const getLink = (collection, id) => {
