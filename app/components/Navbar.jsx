@@ -14,7 +14,7 @@ async function getArticle(searchTerm) {
 try {
 // Specify the collections to search in
 const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle',
-'FeatureTechArticle','HeadlineTechArticle'
+'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle', 'HeadlineMusicArticle'
 ];
 
 // Fetch documents from each collection in parallel
@@ -80,7 +80,9 @@ article: '/Articles',
 Feature_Home_Article: '/HomeFeatureDetails',
 HomeOpinionArticle: '/HomeOpinionDetails',
 FeatureTechArticle: '/Technology/FeatureTechDetails',
-HeadlineTechArticle: '/Technology/HeadlineTechArticle'
+HeadlineTechArticle: '/Technology/HeadlineTechDetails',
+FeatureMusicArticle: '/Music/FeatureMusicDetails',
+HeadlineMusicArticle: '/Music/HeadlineMusicDetails'
 };
 
 const getLink = (collection, id) => {

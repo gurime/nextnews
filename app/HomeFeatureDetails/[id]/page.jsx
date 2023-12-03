@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
   const post = docSnap.data();
   
   return {
-  title: `iTruth News| ${post?.title || 'Page Not Found'}`
+  title: `iTruth News | ${post?.title || 'Page Not Found'}`
   };
   } else {
   return {
