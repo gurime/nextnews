@@ -2,6 +2,7 @@ import ArtilceList from "./Articles/ArtilceList";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import HomeFeatureArticle from "./components/HomeFeatureArticle";
+import HomeOpinionArticle from "./components/HomeOpinionArticle";
 
 export const metadata = {
   title: 'iTruth News - Breaking News Updates, Latest News Headlines',
@@ -15,6 +16,7 @@ export default function Home() {
 <Navbar/>
 <HomeFeatureArticle/>
 <ArtilceList/>
+<HomeOpinionArticle/>
 <Footer/>
     </>
   )

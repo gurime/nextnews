@@ -1,11 +1,11 @@
 'use client'
 import Link from 'next/link';
 import { useEffect, useState } from 'react'
-import { db } from '../Config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/app/Config/firebase';
 
 async function getArticles(orderBy) {
-const querySnapshot = await getDocs(collection(db, "article"));
+const querySnapshot = await getDocs(collection(db, "HeadlineTechArticle"));
 const data = [];
 
 querySnapshot.forEach((doc) => {
@@ -23,7 +23,7 @@ data.sort((a, b) => a.title.localeCompare(b.title));
   }
 
 
-export default function ArtilceList() {
+export default function HeadlineTechArticle() {
 const [fetchError, setFetchError] = useState(null);
 const [loading, setLoading] = useState(true);
 const [useArticle, setUseArticle] = useState([]);
@@ -53,7 +53,7 @@ borderBottom: '1px solid grey',
 lineHeight: '2',
 textTransform: 'capitalize',
 padding: '0 1rem'
-}}>headline news</h1>
+}}>headline tech news</h1>
 
 <p style={{textAlign:'center'}}>Order by:</p>
 
@@ -91,7 +91,7 @@ placeItems: 'center',
 justifyContent: 'space-between',
 
 }}>
-<Link href={`/Articles/${blog.id}`}className="slugbtn btn">
+<Link href={`Technology/HeadlineTechDetails/${blog.id}`}className="slugbtn btn">
 <button className="card-button" rel="noreferrer">
 Read More
 </button>
