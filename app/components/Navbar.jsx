@@ -13,7 +13,7 @@ import { db } from "../Config/firebase"
 async function getArticle(searchTerm) {
 try {
 // Specify the collections to search in
-const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle','FeatureEducationArticle','HeadlineEducationArticle','FeaturePoliticsArticle', 'HeadlinePoliticsArticle', 'FeatureOpinionArticle','HeadlineOpinionArticle','FeatureSportsArticle','HeadlineSportsArticle'
+const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle','FeatureEducationArticle','HeadlineEducationArticle','FeaturePoliticsArticle', 'HeadlinePoliticsArticle', 'FeatureOpinionArticle','HeadlineOpinionArticle','FeatureSportsArticle','HeadlineSportsArticle','FeatureFashionArticle,','HeadlineFashionArticle','FeatureEntertainmentArticle','HeadlineEntertainmentArticle','FeatureVideoGamesArticle','HeadlineVideoGamesArticle','FeatureBusinessArticle','HeadlineBusinessArticle','FeatureImmigrationArticle','HeadlineImmigrationArticle'
 ];
 
 // Fetch documents from each collection in parallel
@@ -78,19 +78,34 @@ const collectionRoutes = {
 article: '/Articles',
 Feature_Home_Article: '/HomeFeatureDetails',
 HomeOpinionArticle: '/HomeOpinionDetails',
-FeatureTechArticle: '/pages/Technology/FeatureTechDetails',
-HeadlineTechArticle: '/pages/Technology/HeadlineTechDetails',
-FeatureMusicArticle: '/pages/Music/FeatureMusicDetails',
-HeadlineMusicArticle: '/pages/Music/HeadlineMusicDetails',
-FeatureEducationArticle:'/pages/Education/FeatureEducationDetails',
-HeadlineEducationArticle: '/pages/Education/HeadlineEducationDetails',
-FeaturePoliticsArticle:'/pages/Politics/FeaturePoliticsDetails',
-HeadlinePoliticsArticle: '/pages/Politics/HeadlinePoliticsDetails',
-FeatureOpinionArticle:'/pages/Opinion/FeatureOpinionDetails',
-HeadlineOpinionArticle: '/pages/Opinion/HeadlineOpinionDetails',
-FeatureSportsArticle:'/pages/Sports/FeatureSportsDetails',
-HeadlineSportsArticle: '/pages/Sports/HeadlineSportsDetails',
+//home page stops here//
 
+FeatureTechArticle: '/pages/Technology/FeatureTechDetails',
+FeatureMusicArticle: '/pages/Music/FeatureMusicDetails',
+FeatureEducationArticle:'/pages/Education/FeatureEducationDetails',
+FeaturePoliticsArticle:'/pages/Politics/FeaturePoliticsDetails',
+FeatureOpinionArticle:'/pages/Opinion/FeatureOpinionDetails',
+FeatureSportsArticle:'/pages/Sports/FeatureSportsDetails',
+FeatureFashionArticle:'/pages/Fashion/FeatureFashionDetails',
+FeatureEntertainmentArticle:'/pages/Entertainment/FeatureEntertainmentDetails',
+FeatureBuisnessArticle:'/pages/Business/FeatureBuisnessDetails',
+FeatureImmigrationArticle:'/pages/Immigration/FeatureImmigrationDetails',
+FeatureVideoGamesArticle:'/pages/VideoGames/FeatureVideoGamesDetails',
+//Feature Articles stops here
+
+
+HeadlineTechArticle: '/pages/Technology/HeadlineTechDetails',
+HeadlineMusicArticle: '/pages/Music/HeadlineMusicDetails',
+HeadlineEducationArticle: '/pages/Education/HeadlineEducationDetails',
+HeadlinePoliticsArticle: '/pages/Politics/HeadlinePoliticsDetails',
+HeadlineOpinionArticle: '/pages/Opinion/HeadlineOpinionDetails',
+HeadlineSportsArticle: '/pages/Sports/HeadlineSportsDetails',
+HeadlineFashionArticle:'/pages/Fashion/HeadlineFashionDetails',
+HeadlineEntertainmentArticle:'/pages/Entertainment/HeadlineEntertainmentDetails',
+HeadlineBusinessArticle:'/pages/Business/HeadlineBusinessDetails',
+HeadlineImmigraionArticle:'/pages/Immigration/HeadlineImmigrationDetails',
+HeadlineVideoGamesArticle:'/pages/VideoGames/HeadlineVideoGamesDetails'
+//Hadline Articles stops here
 };
 
 const getLink = (collection, id) => {
