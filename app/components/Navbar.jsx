@@ -13,7 +13,7 @@ import { db } from "../Config/firebase"
 async function getArticle(searchTerm) {
 try {
 // Specify the collections to search in
-const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle'
+const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle','FeatureEducationArticle','HeadlineEducationArticle','FeaturePoliticsArticle', 'HeadlinePoliticsArticle', 'FeatureOpinionArticle','HeadlineOpinionArticle','FeatureSportsArticle','HeadlineSportsArticle'
 ];
 
 // Fetch documents from each collection in parallel
@@ -82,6 +82,15 @@ FeatureTechArticle: '/pages/Technology/FeatureTechDetails',
 HeadlineTechArticle: '/pages/Technology/HeadlineTechDetails',
 FeatureMusicArticle: '/pages/Music/FeatureMusicDetails',
 HeadlineMusicArticle: '/pages/Music/HeadlineMusicDetails',
+FeatureEducationArticle:'/pages/Education/FeatureEducationDetails',
+HeadlineEducationArticle: '/pages/Education/HeadlineEducationDetails',
+FeaturePoliticsArticle:'/pages/Politics/FeaturePoliticsDetails',
+HeadlinePoliticsArticle: '/pages/Politics/HeadlinePoliticsDetails',
+FeatureOpinionArticle:'/pages/Opinion/FeatureOpinionDetails',
+HeadlineOpinionArticle: '/pages/Opinion/HeadlineOpinionDetails',
+FeatureSportsArticle:'/pages/Sports/FeatureSportsDetails',
+HeadlineSportsArticle: '/pages/Sports/HeadlineSportsDetails',
+
 };
 
 const getLink = (collection, id) => {
@@ -123,11 +132,11 @@ onChange={(e) => setSearchTerm(e.target.value)}
 
 <div className="navlinks">
 <Link href="/">Home</Link>
-<Link href="../pages/Technology">Technology</Link>
-<Link href="../pages/Music">Music</Link>
-<Link href="../pages/Politics">Politics</Link>
-<Link href="../pages/Opinion">Opinion</Link>
-<Link href="../pages/Sports">Sports</Link>
+<Link href="/pages/Technology">Technology</Link>
+<Link href="/pages/Music">Music</Link>
+<Link href="/pages/Politics">Politics</Link>
+<Link href="/pages/Opinion">Opinion</Link>
+<Link href="/pages/Sports">Sports</Link>
 <Link href='#!' onClick={toggleFooter}>More:</Link>
 <button onClick={() => router.push('../pages/Contribute')} id="subbtn1">Contribute</button>
 </div>

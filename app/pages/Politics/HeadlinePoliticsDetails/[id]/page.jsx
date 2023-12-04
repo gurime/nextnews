@@ -9,7 +9,7 @@ import React from 'react'
 
 export async function generateMetadata({ params }) {
 
-  const docRef = doc(db, 'FeatureTechArticle', params.id);
+  const docRef = doc(db, 'HeadlinePoliticsArticle', params.id);
   
   try {
   const docSnap = await getDoc(docRef);
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }) {
   
   async function getArticle(id) {
   
-  const articleRef = doc(db, 'FeatureTechArticle', id);
+  const articleRef = doc(db, 'HeadlinePoliticsArticle', id);
   try {
   const docSnap = await getDoc(articleRef);
   if (docSnap.exists()) {
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }) {
   }
   }
 
-export default async function FeatureTechDetails({params}) {
+export default async function HeadlinePoliticsDetails({params}) {
 const post = await getArticle(params.id)
 
 return (

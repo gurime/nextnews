@@ -5,7 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/app/Config/firebase';
 
 async function getArticles(orderBy) {
-const querySnapshot = await getDocs(collection(db, "HeadlineEducationArticle"));
+const querySnapshot = await getDocs(collection(db, "HeadlinePoliticsArticle"));
 const data = [];
 
 querySnapshot.forEach((doc) => {
@@ -22,7 +22,8 @@ data.sort((a, b) => a.title.localeCompare(b.title));
     return data;
   }
 
-export default function HeadlineEducationArticle() {
+
+export default function HeadlinePoliticsArticle() {
 const [fetchError, setFetchError] = useState(null);
 const [loading, setLoading] = useState(true);
 const [useArticle, setUseArticle] = useState([]);
@@ -52,7 +53,7 @@ borderBottom: '1px solid grey',
 lineHeight: '2',
 textTransform: 'capitalize',
 padding: '0 1rem'
-}}>headline education news</h1>
+}}>headline politics news</h1>
 
 <p style={{textAlign:'center'}}>Order by:</p>
 
@@ -90,7 +91,7 @@ placeItems: 'center',
 justifyContent: 'space-between',
 
 }}>
-<Link href={`Education/HeadlineEducationDetails/${blog.id}`}className="slugbtn btn">
+<Link href={`Politics/HeadlinePoliticsDetails/${blog.id}`}className="slugbtn btn">
 <button className="card-button" rel="noreferrer">
 Read More
 </button>
