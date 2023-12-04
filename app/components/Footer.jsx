@@ -53,11 +53,11 @@ tabIndex={0}/>
 
 <li><Link href='#!'>Company News</Link></li>
 
-<li><Link href='../pages/About'>About iTruth News</Link></li>
+<li><Link href='/pages/About'>About iTruth News</Link></li>
 
-<li><Link href='../pages/Investor'>Investor Relations </Link></li>
+<li><Link href='/pages/Investor'>Investor Relations </Link></li>
 
-<li><Link href='../pages/Advertise' >Advertise</Link></li>
+<li><Link href='/pages/Advertise' >Advertise</Link></li>
 
 
 </ul>
@@ -67,23 +67,23 @@ tabIndex={0}/>
 <div className="footer-headline">U.S News</div>
 
 <ul className="footer-navlink">
-<li><Link href='../pages/Military'>Military</Link></li>
+<li><Link href='/pages/Military'>Military</Link></li>
 
-<li><Link href='../pages/Crime'>Crime</Link></li>
+<li><Link href='/pages/Crime'>Crime</Link></li>
 
-<li><Link href='../pages/Economy'>Economy</Link></li>
+<li><Link href='/pages/Economy'>Economy</Link></li>
 
-<li><Link href='../pages/Immigration'>Immigration</Link></li>
+<li><Link href='/pages/Immigration'>Immigration</Link></li>
 
-<li><Link href='../pages/Business'>Business</Link></li>
+<li><Link href='/pages/Business'>Business</Link></li>
 
-<li><Link href='../pages/VideoGames'>Video Games</Link></li>
+<li><Link href='/pages/VideoGames'>Video Games</Link></li>
 
-<li><Link href='../pages/Entertainment'>Entertainment</Link></li>
+<li><Link href='/pages/Entertainment'>Entertainment</Link></li>
 
-<li><Link href='../pages/Fashion'>Fashion</Link></li>
+<li><Link href='/pages/Fashion'>Fashion</Link></li>
 
-<li><Link href='../pages/Education'>Education</Link></li>
+<li><Link href='/pages/Education'>Education</Link></li>
 
 </ul>
 </div>
@@ -92,23 +92,23 @@ tabIndex={0}/>
 <div className="footer-headline">World News</div>
 
 <ul className="footer-navlink">
-<li><Link href='../pages/UN'>U.N.</Link></li>
+<li><Link href='/pages/UN'>U.N.</Link></li>
 
-<li><Link href='../pages/Terrorism'>Terrorism</Link></li>
+<li><Link href='/pages/Terrorism'>Terrorism</Link></li>
 
-<li><Link href='../pages/WorldEconomy'>World Economy</Link></li>
+<li><Link href='/pages/WorldEconomy'>World Economy</Link></li>
 
-<li><Link href='../pages/Scandals'>Scandals</Link></li>
+<li><Link href='/pages/Scandals'>Scandals</Link></li>
 
-<li><Link href='../pages/Mexico'>Mexico</Link></li>
+<li><Link href='/pages/Mexico'>Mexico</Link></li>
 
-<li><Link href='../pages/SouthAmerica'>South America</Link></li>
+<li><Link href='/pages/SouthAmerica'>South America</Link></li>
 
-<li><Link href='../pages/Europe'>Europe </Link></li>
+<li><Link href='/pages/Europe'>Europe </Link></li>
 
-<li><Link href='../pages/Asia'>Asia</Link></li>
+<li><Link href='/pages/Asia'>Asia</Link></li>
 
-<li><Link href='../pages/Africa'>Africa</Link></li>
+<li><Link href='/pages/Africa'>Africa</Link></li>
 
 </ul>
 </div>
@@ -117,23 +117,23 @@ tabIndex={0}/>
 <div className="footer-headline">Life Style</div>
 
 <ul className="footer-navlink">
-<li><Link  href='../pages/Food'>Food & Drinks</Link></li>
+<li><Link  href='/pages/Food'>Food & Drinks</Link></li>
 
-<li><Link  href='../pages/Cars'>Cars & Trucks</Link></li>
+<li><Link  href='/pages/Cars'>Cars & Trucks</Link></li>
 
-<li><Link  href='../pages/Home'>House & Home </Link></li>
+<li><Link  href='/pages/Home'>House & Home </Link></li>
 
-<li><Link  href='../pages/Pets'> Pets & Tips </Link></li>
+<li><Link  href='/pages/Pets'> Pets & Tips </Link></li>
 
-<li><Link  href='../pages/Fitness'>Fitness & Well-Being</Link></li>
+<li><Link  href='/pages/Fitness'>Fitness & Well-Being</Link></li>
 
-<li><Link  href='../pages/Family'>Family & Friends</Link></li>
+<li><Link  href='/pages/Family'>Family & Friends</Link></li>
 
-<li><Link href='../pages/Religion'>Faith & Religion</Link></li>
+<li><Link href='/pages/Religion'>Faith & Religion</Link></li>
 
-<li><Link href='../pages/Books'>Books & Literature</Link></li>
+<li><Link href='/pages/Books'>Books & Literature</Link></li>
 
-<li><Link href='../pages/Pride'>Pride & News</Link></li>
+<li><Link href='/pages/Pride'>Pride & News</Link></li>
 
 </ul>
 </div>
@@ -142,21 +142,21 @@ tabIndex={0}/>
 <div className="footer-headline">Health</div>
 
 <ul className="footer-navlink" style={{borderBottom:'none'}}>
-<li><Link  href='../pages/MentalHealth'>Mental Health</Link></li>
+<li><Link  href='/pages/MentalHealth'>Mental Health</Link></li>
 
-<li><Link  href='../pages/ChildrensHealth'>Children's Health</Link></li>
+<li><Link  href='/pages/ChildrensHealth'>Children's Health</Link></li>
 
-<li><Link  href='../pages/HeartHealth'>Heart Health</Link></li>
+<li><Link  href='/pages/HeartHealth'>Heart Health</Link></li>
 
-<li><Link  href='../pages/PetHealth'>Pet Health</Link></li>
+<li><Link  href='/pages/PetHealth'>Pet Health</Link></li>
 
-<li><Link  href='../pages/EyeHealth'>Eye Health</Link></li>
+<li><Link  href='/pages/EyeHealth'>Eye Health</Link></li>
 
-<li><Link  href='../pages/HealthyLiving'>Healthy Living </Link></li>
+<li><Link  href='/pages/HealthyLiving'>Healthy Living </Link></li>
 
-<li><Link  href='../pages/MedicalResearch'>Medical Reasearch</Link></li>
+<li><Link  href='/pages/MedicalResearch'>Medical Reasearch</Link></li>
 
-<li><Link  href='../pages/Cancer'> Cancer</Link></li>
+<li><Link  href='/pages/Cancer'> Cancer</Link></li>
 
 
 
@@ -178,11 +178,11 @@ tabIndex={0}/>
 
 
 <div className="navlinks sm-navlink" style={{flexWrap:'nowrap'}}>
-<Link  href='../pages/Contact'>Contact iTruth News</Link>
+<Link  href='/pages/Contact'>Contact iTruth News</Link>
 
-<Link  href='../pages/Terms'>terms of Use</Link>
+<Link  href='/pages/Terms'>terms of Use</Link>
 
-<Link  href='../pages/Privacy'>Privacy Policies </Link>
+<Link  href='/pages/Privacy'>Privacy Policies </Link>
 
 <Link style={{border:'none'}}  href='../pages/Cookie'>Cookie Policies</Link>
 
