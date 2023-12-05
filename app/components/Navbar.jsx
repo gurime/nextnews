@@ -59,7 +59,22 @@ const router = useRouter()
 const [isFooterVisible, setIsFooterVisible] = useState(false);
 const [searchTerm, setSearchTerm] = useState('');
 const [searchResults, setSearchResults] = useState([]);
+const [isOverlayActive, setIsOverlayActive] = useState(false);
 const [loading, setLoading] = useState(false);
+
+const overlayStyle = {
+position: 'fixed',
+top: 0,
+left: 0,
+width:'100%',
+height: '100%',
+background: '#000', // Adjust the alpha value to control the darkness
+opacity:'.6',
+display: isOverlayActive ? 'block' : 'none',
+pointerEvents: 'none',
+};
+  
+
 const handleSearch = async () => {
 const results = await getArticle(searchTerm);
 setSearchResults(results);
@@ -128,7 +143,8 @@ return (
 <>
 <div className="nav">
 <Image placeholder="blur" onClick={() => router.push('/')} src={navlogo} height={36} alt='...' />
-<form style={{ width: '100%',position:'relative' }} onSubmit={handleSearch}>
+<div style={overlayStyle}></div>
+<form style={{ width: '100%',position:'relative',  }} onSubmit={handleSearch}>
 <input
 placeholder="Search iTruth News"
 type="search"
@@ -136,13 +152,16 @@ spellCheck="false"
 dir="auto"
 tabIndex={0}
 value={searchTerm}
-onChange={(e) => setSearchTerm(e.target.value)}
+onChange={(e) => {
+    setSearchTerm(e.target.value);
+    setIsOverlayActive(e.target.value.trim().length > 0);
+  }}
 />
 
 
 {searchResults.length > 0 && searchTerm && !loading && (
 <div className="search-results-container">
-{searchResults.slice(0,5).map((result) => (
+{searchResults.slice(0,10).map((result) => (
 <div key={result.id} className="search-result-item">
 <Link key={result.id} href={getLink(result.collection, result.id)}>
 <p>{result.title}</p>
@@ -169,8 +188,11 @@ onChange={(e) => setSearchTerm(e.target.value)}
 
 
 {/* footer dropdown */}
-{isFooterVisible && <Footer />}
-
+<div style={{position:'relative',width:'100%'}}>
+<div style={{position:'absolute',width:'100%'}}>
+{isFooterVisible && <Footer />}</div>
+</div>
+{/* footer dropdown */}
 </>
 )
 }
