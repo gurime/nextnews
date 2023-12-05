@@ -128,7 +128,7 @@ return (
 <>
 <div className="nav">
 <Image placeholder="blur" onClick={() => router.push('/')} src={navlogo} height={36} alt='...' />
-<form style={{ width: '100%' }} onSubmit={handleSearch}>
+<form style={{ width: '100%',position:'relative' }} onSubmit={handleSearch}>
 <input
 placeholder="Search iTruth News"
 type="search"
