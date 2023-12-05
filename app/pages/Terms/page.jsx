@@ -5,7 +5,7 @@ import React from 'react'
 
 
 export const metadata = {
-  title: 'iTruth News | Terms of Service',
+  title: 'iTruth News - Terms of Service',
   description: 'Explore the terms of service agreement with iTruth News. Your guide to understanding the rules and conditions that govern your use of our platform. Learn about user responsibilities, privacy policies, and the commitments we make to ensure a secure and respectful online environment.',
   keywords: 'terms of service, terms and conditions, user responsibilities, privacy policies, online platform rules, secure online environment, iTruth News agreements'
 }

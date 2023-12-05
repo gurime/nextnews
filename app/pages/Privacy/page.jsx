@@ -5,7 +5,7 @@ import React from 'react'
 
 
 export const metadata = {
-    title: 'iTruth News | Privacy',
+    title: 'iTruth News - Privacy',
     description: 'Discover how iTruth News protects your online privacy. Learn about our commitment to data security, best practices for user protection, and stay informed on the measures we take to ensure your privacy while interacting with our platform. Your assurance for a secure and confidential online experience with iTruth News.',
     keywords: 'user privacy, data security, online privacy protection, user protection best practices, privacy measures, secure online experience, iTruth News privacy policy'
   }

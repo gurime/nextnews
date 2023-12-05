@@ -7,7 +7,7 @@ import contactitruthimg from '../../img/contact-img.jpg'
 import Link from 'next/link'
 
 export const metadata = {
-    title: 'iTruth News | Contact',
+    title: 'iTruth News - Contact',
     description: 'Connect with iTruth News for seamless communication. Reach out effortlessly to our team, inquire about partnerships, or share your feedback. Your bridge to establishing a direct line with iTruth News, ensuring your queries are met with prompt and attentive responses.',
     keywords: 'contact, communication, partnerships, feedback, direct line, prompt responses, attentive support'
   }

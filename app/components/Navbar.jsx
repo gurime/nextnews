@@ -13,7 +13,7 @@ import { db } from "../Config/firebase"
 async function getArticle(searchTerm) {
 try {
 // Specify the collections to search in
-const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle','FeatureEducationArticle','HeadlineEducationArticle','FeaturePoliticsArticle', 'HeadlinePoliticsArticle', 'FeatureOpinionArticle','HeadlineOpinionArticle','FeatureSportsArticle','HeadlineSportsArticle','FeatureFashionArticle,','HeadlineFashionArticle','FeatureEntertainmentArticle','HeadlineEntertainmentArticle','FeatureVideoGamesArticle','HeadlineVideoGamesArticle','FeatureBusinessArticle','HeadlineBusinessArticle','FeatureImmigrationArticle','HeadlineImmigrationArticle','FeatureEconomyArticle','HeadlineEconomyArticle'
+const collectionNames = ['article', 'Feature_Home_Article','HomeOpinionArticle', 'FeatureTechArticle','HeadlineTechArticle','FeatureMusicArticle','HeadlineMusicArticle','FeatureEducationArticle','HeadlineEducationArticle','FeaturePoliticsArticle', 'HeadlinePoliticsArticle', 'FeatureOpinionArticle','HeadlineOpinionArticle','FeatureSportsArticle','HeadlineSportsArticle','FeatureFashionArticle,','HeadlineFashionArticle','FeatureEntertainmentArticle','HeadlineEntertainmentArticle','FeatureVideoGamesArticle','HeadlineVideoGamesArticle','FeatureBusinessArticle','HeadlineBusinessArticle','FeatureImmigrationArticle','HeadlineImmigrationArticle','FeatureEconomyArticle','HeadlineEconomyArticle','FeatureCrimeArticle','HeadlineCrimeArticle','FeatureMilitaryArticle','HeadlineMilitaryArticle','FeatureAfricaArticle','HeadlineAfricaArticle'
 ];
 
 // Fetch documents from each collection in parallel
@@ -92,6 +92,9 @@ FeatureBuisnessArticle:'/pages/Business/FeatureBuisnessDetails',
 FeatureImmigrationArticle:'/pages/Immigration/FeatureImmigrationDetails',
 FeatureVideoGamesArticle:'/pages/VideoGames/FeatureVideoGamesDetails',
 FeatureEconomyArticle:'/pages/Economy/FeatureEconomyDetails',
+FeatureCrimeArticle:'/pages/Crime/FeatureCrimeDetails',
+FeatureMilitaryArticle:'/pages/Military/FeatureMilitaryDetails',
+FeatureAfricaArticle:'/pages/Africa/FeatureAfricaDetails',
 //Feature Articles stops here
 
 
@@ -106,8 +109,11 @@ HeadlineEntertainmentArticle:'/pages/Entertainment/HeadlineEntertainmentDetails'
 HeadlineBusinessArticle:'/pages/Business/HeadlineBusinessDetails',
 HeadlineImmigraionArticle:'/pages/Immigration/HeadlineImmigrationDetails',
 HeadlineVideoGamesArticle:'/pages/VideoGames/HeadlineVideoGamesDetails',
-HeadlineEconomyArticle:'/pages/Economy/HeadlineEconomyDetails'
-//Hadline Articles stops here
+HeadlineEconomyArticle:'/pages/Economy/HeadlineEconomyDetails',
+HeadlineCrimeArticle:'/pages/Crime/HeadlineCrimeDetails',
+HeadlineMilitaryArticle:'/pages/Military/HeadlineMilitaryDetails',
+HeadlineAfricaArticle:'/pages/Africa/HeadlineAfricaDetails'
+//Headline Articles stops here
 };
 
 const getLink = (collection, id) => {

@@ -5,7 +5,7 @@ import adimg from '../../img/adimg.jpeg'
 import Image from 'next/image'
 
 export const metadata = {
-    title: 'iTruth News | Advertise',
+    title: 'iTruth News - Advertise',
     description: 'Promote your work effectively with iTruth News. Explore tailored advertising solutions, reaching a diverse audience with precision. Your gateway to showcasing your offerings, backed by accurate insights and timely exposure opportunities.',
     keywords: 'advertise, advertising solutions, diverse audience, precision marketing, showcase offerings, accurate insights, exposure opportunities'
   }

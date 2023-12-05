@@ -6,7 +6,7 @@ import aboutwall from '../../img/about-wall.jpg'
 
 import React from 'react'
 export const metadata = {
-  title: 'iTruth News | About',
+  title: 'iTruth News - About',
   description: 'Discover the story behind iTruth News. Delve into our mission, values, and the team driving accurate and timely news delivery. Your window into the heart of iTruth News, offering a deeper understanding of our commitment to informative journalism.',
   keywords: 'about us, iTruth News, mission, values, news delivery, journalism, informative journalism, team'
 }

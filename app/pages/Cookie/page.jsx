@@ -6,7 +6,7 @@ import React from 'react'
 
 
 export const metadata = {
-  title: 'iTruth News | Cookie',
+  title: 'iTruth News - Cookie',
   description: 'Explore our cookie policy at iTruth News. Learn how we use cookies to enhance your browsing experience and ensure the proper functioning of our website. Your privacy is important to us, and this page provides insights into the information we collect and how it is utilized.',
   keywords: 'cookie policy, cookies, online privacy, website functionality, data collection, privacy policy'
 }
