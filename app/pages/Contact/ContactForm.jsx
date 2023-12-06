@@ -93,7 +93,7 @@ return (
 <>
 <div className='contact_title_img'>
 <Link href='/'>
-<Image height={34} src={contactimg} alt='...' />
+<Image title='Home Page' height={34} src={contactimg} alt='...' />
 </Link>
 </div>
 <div style={{ display: 'grid', placeContent: 'center', maxWidth:'30rem', margin: 'auto' }}>
@@ -134,7 +134,7 @@ onBlur={onBlur}
 type="text"
 id='message'
 name="message"
-rows={10}
+rows={5}
 value={values.message}
 onChange={handleChange}
 onBlur={onBlur}
@@ -143,8 +143,7 @@ onBlur={onBlur}
 <button disabled={isLoading || !values.name || !values.email || !values.subject || !values.message} > {isLoading ? 'Submitting...' : 'Submit'}
 </button>
 {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-{successMessage && (
-<p style={{ color: "green", textAlign: "center" }}>{successMessage}</p>)}
+{successMessage && (<p style={{ color: "green", textAlign: "center" }}>{successMessage}</p>)}
 </form>
 </div>
 </>

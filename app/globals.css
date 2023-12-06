@@ -686,6 +686,7 @@ border-radius: 5px;
 border: solid 1px #aa0202;
 letter-spacing: 1px;
 text-indent: 7px;
+font-size: 20px;
 }
 
 
@@ -696,6 +697,7 @@ border-radius: 5px;
 width: 100%;
 border: solid 1px #aa0202;
 text-indent: 7px;
+font-size: 20px;
 }
 
 .formbox button{
@@ -776,7 +778,6 @@ margin: auto;
 }
 
 .contribute-rightbox{
-background-color: #f0f8ff;
 padding-left: 3rem;  
 text-transform: capitalize;
 }
@@ -883,13 +884,7 @@ cursor: not-allowed;
   
 /*  */
 
-@media(max-width:1350px){
-.formbox input{
-  display: flex;
- 
- 
-}
-}
+
   
   
 /*nav and footer media */
@@ -1060,11 +1055,11 @@ height: auto;
 }
 
 .contribute-rightbox h1{
-font-size: 24px;
+font-size: 24px ;
 }
 
 .contribute-rightbox p{
-font-size: 13px;
+font-size: 13px ;
 }
 
 .textabout{
