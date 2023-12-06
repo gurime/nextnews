@@ -1,9 +1,8 @@
 'use client'
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import contactimg from '../../img/contact-itruthnews.png';
-
 
 
 
@@ -12,10 +11,24 @@ const [isLoading, setIsLoading] = useState(false);
 const [error, setError] = useState('');
 const [successMessage, setSuccessMessage] = useState('');
 const [values, setValues] = useState({name: '',email: '',subject: '',message: '',});
-    
 
 
- 
+const handleSubmit = async () => {
+  try {
+    setIsLoading(true);
+
+    // Perform form submission logic, e.g., make API calls
+
+    // If successful, display a success message
+    setSuccessMessage('Form submitted successfully');
+  } catch (error) {
+    // Handle submission error, update error state
+    setError('An error occurred during form submission');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
       
     
 const handleChange = (e) => {
@@ -97,54 +110,57 @@ return (
 </Link>
 </div>
 <div style={{ display: 'grid', placeContent: 'center', maxWidth:'30rem', margin: 'auto' }}>
-<form className='formbox'>
+<form className='formbox' onSubmit={handleSubmit}>
+  <label htmlFor='fname' aria-label="Name">Name</label>
+  <input
+    type="text"
+    name="name"
+    id='fname'
+    value={values.name}
+    onChange={handleChange}
+  />
 
-<label htmlFor='fname'>Name</label>
-<input
-type="text"
-name="name"
-id='fname'
-value={values.name}
-onChange={handleChange}
-        
-/>
+  <label htmlFor='email' aria-label="Email">Email</label>
+  <input
+    id='email'
+    type="email"
+    name="email" 
+    value={values.email}
+    onChange={handleChange}
+    onBlur={onBlur}
+    aria-describedby="emailError"
+  />
 
-<label htmlFor='email'>Email</label>
-<input
-id='email'
-type="email"
-name="email" 
-value={values.email}
-onChange={handleChange}
-onBlur={onBlur}
-/>
+  <label htmlFor='subject' aria-label="Subject">Subject</label>
+  <input
+    id='subject'
+    type="text"
+    name="subject"
+    value={values.subject}
+    onChange={handleChange}
+    onBlur={onBlur}
+    aria-describedby="subjectError"
+  />
 
-<label htmlFor='subject'>Subject</label>
-<input
-id='subject'
-type="text"
-name="subject"
-value={values.subject}
-onChange={handleChange}
-onBlur={onBlur}
-/>
+  <label htmlFor='message' aria-label="Type Your Message">Type Your Message</label>
+  <textarea
+    type="text"
+    id='message'
+    name="message"
+    rows={5}
+    value={values.message}
+    onChange={handleChange}
+    onBlur={onBlur}
+    aria-describedby="messageError"
+  />
 
-<label htmlFor='message'>Type Your Message</label>
-<textarea
-type="text"
-id='message'
-name="message"
-rows={5}
-value={values.message}
-onChange={handleChange}
-onBlur={onBlur}
-/>
-
-<button disabled={isLoading || !values.name || !values.email || !values.subject || !values.message} > {isLoading ? 'Submitting...' : 'Submit'}
-</button>
-{error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-{successMessage && (<p style={{ color: "green", textAlign: "center" }}>{successMessage}</p>)}
+  <button type="submit" disabled={isLoading || error}>
+    {isLoading ? 'Submitting...' : 'Submit'}
+  </button>
 </form>
+
+{error && <p id="emailError" style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+{successMessage && (<p id="successMessage" style={{ color: "green", textAlign: "center" }}>{successMessage}</p>)}
 </div>
 </>
 );
