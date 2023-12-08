@@ -27,7 +27,7 @@ const handleRegister = async (e) => {
     try {
       setIsLoading(true);
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password,firstName,lastName);
       const user = userCredential.user;
 
       await updateProfile(auth.currentUser, {
@@ -39,13 +39,14 @@ const handleRegister = async (e) => {
       await setDoc(doc(db, 'users', user.uid), {
         firstName,
         lastName,
-        email
+        email,
+        password
       });
 
       router.push('/');
     } catch (error) {
       // Improve error handling, provide more specific messages
-      setErrorState('Registration failed. Please check your details and try again.');
+      setErrorState('Please check your details and try again.');
     } finally {
       setIsLoading(false);
     }

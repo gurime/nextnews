@@ -2,6 +2,9 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import { auth,db } from '@/app/Config/firebase';
+import CommentList from './CommentList';
+import { addDoc, collection, doc, getDoc, getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 export default function CommentForm() {
 const [isSignedIn, setIsSignedIn] = useState(false);
@@ -11,6 +14,8 @@ const [successMessage, setSuccessMessage] = useState("");
 const [names, setNames] = useState([]);
 const [editComment, setEditComment] = useState(null);
 const [autoFocus, setAutoFocus] = useState(false);
+const [user, setUser] = useState("");
+
 const router = useRouter();
 
  useEffect(() => {
@@ -30,48 +35,98 @@ const router = useRouter();
       }
     });
 
-    // Cleanup function
-    return () => unsubscribe();
-  }, []);
+const getUserData = async (userId) => {
+try {
+// Access Firestore
+const db = getFirestore();
+    
+// Example: Getting data from a 'users' collection based on user ID
+const userDocRef = doc(db, 'users', userId);
+const userDocSnapshot = await getDoc(userDocRef);
+    
+// Check if the document exists
+if (userDocSnapshot.exists()) {
+// Access user data
+const userData = userDocSnapshot.data();
+return userData;
+} else {
+// Handle the case where the user document does not exist
+return null;
+}
+} catch (error) {
+console.error('Error fetching user data:', error.message);
+throw error; // Propagate the error for handling in the calling code
+}
+};
+
+// Cleanup function
+return () => unsubscribe();
+}, []);
 
 
   const handleLogout = async () => {
-    try {
-      await auth.signOut();
-    } catch (error) {
-      console.error('Error during logout:', error.message);
-    }
-  };
+try {
+await auth.signOut();
+} catch (error) {
+console.error('Error during logout:', error.message);
+}
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+e.preventDefault();
 
-    try {
-      // Check if the user is signed in
-      if (!isSignedIn) {
-        // Redirect to the login page if not signed in
-        router.push('/pages/Login');
-        return;
-      }
+try {
+const auth = getAuth();
+const user = auth.currentUser;
 
-      // Perform form submission logic, e.g., make API calls
+// Check if the user is signed in
+if (!user) {
+// Redirect to the login page if not signed in
+router.push('/pages/Login');
+return;
+}
 
-      // If successful, display a success message
-      setSuccessMessage('Form submitted successfully');
-    } catch (error) {
-      // Handle submission error, update error state
-      console.error('Error during form submission:', error.message);
-    }
-  };
+// Access Firestore
+const db = getFirestore();
+// Example: Creating a 'comments' collection and adding a document
+const commentsCollection = collection(db, 'comments');
+// Use the content of the comment as the form data
+const formData = content;
+// Add document to Firestore
+const docRef = await addDoc(commentsCollection, {
+  userId: user.uid,
+  content: formData,
+  timestamp: new Date(),
+  userName: user.displayName,
+  userEmail: user.email,
+  // Add other user-related fields as needed
+    });
+    
+
+    // If successful, display a success message or perform other actions
+    setSuccessMessage('Comment submitted successfully');
+    setContent(''); // Clear the content after submission
+  } catch (error) {
+    // Handle submission error, update error state
+    console.error('Error during form submission:', error.message);
+  }
+};
+
+  const handleEdit = (event, comment) => {
+    event.preventDefault();
+    setContent(comment.content); 
+    setEditComment(comment); 
+    setAutoFocus(true);
+    };
+
 return (
 <>
 <form className="postform" onSubmit={handleSubmit}>
 {isSignedIn ? (
 <div className="commentreg-box">
-{names.length > 0 && (
-<span style={{ padding: '0 1rem' }} className="navinfo-block">
-<span className="navinfo">{names.join(', ')}</span>
-</span>)}
+<span className="navinfo-block">
+    <span className="navinfo">{user.firstName}</span>
+  </span>
                         
 <button
 style={{
@@ -108,6 +163,7 @@ Register
 <textarea
 rows="5"
 cols="50"
+placeholder='Type Your Message'
 required
 value={content}
 onChange={(e) => setContent(e.target.value)}
@@ -125,6 +181,8 @@ disabled={!isSignedIn || !content}
 
 {successMessage && <p className="error">{successMessage}</p>}
 </form>
+<CommentList  handleEdit={handleEdit}  />
+
 </>
 )
 }

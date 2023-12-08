@@ -1022,7 +1022,7 @@ width: auto;
 }
 
 .formbox{
-width: 20rem;
+width: 20rem !important;
 }
 
 .feedback-block{

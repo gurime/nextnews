@@ -36,7 +36,7 @@ const handleLogin = async (e) => {
       router.push('/');
     } catch (error) {
       // Improve error handling, provide more specific messages
-      setErrorState('Login failed. Please check your credentials and try again.');
+      setErrorState('Please check your Email or Password');
     } finally {
       setIsLoading(false);
     }
@@ -57,7 +57,7 @@ return (
 <div className='contribute-leftbox' style={{ marginBottom: '10rem' }}>
 <Image src={itcontrubte} alt='...' priority />
 
-<form className='formbox' onSubmit={handleLogin}>
+<form style={{width:'35rem'}} className='formbox' onSubmit={handleLogin}>
 <label htmlFor='email'>Email</label>
 <input
 type='email'
