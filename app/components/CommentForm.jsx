@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import { auth,db } from '@/app/Config/firebase';
 import CommentList from './CommentList';
-import { addDoc, collection, doc, getDoc, getFirestore } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 export default function CommentForm() {
@@ -73,50 +73,80 @@ console.error('Error during logout:', error.message);
 };
 
 const handleSubmit = async (e) => {
-e.preventDefault();
+  e.preventDefault();
 
-try {
-const auth = getAuth();
-const user = auth.currentUser;
+  try {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-// Check if the user is signed in
-if (!user) {
-// Redirect to the login page if not signed in
-router.push('/pages/Login');
-return;
-}
+    // Check if the user is signed in
+    if (!user) {
+      // Redirect to the login page if not signed in
+      router.push('/pages/Login');
+      return;
+    }
 
-// Access Firestore
-const db = getFirestore();
-// Example: Creating a 'comments' collection and adding a document
-const commentsCollection = collection(db, 'comments');
-// Use the content of the comment as the form data
-const formData = content;
-// Add document to Firestore
-const docRef = await addDoc(commentsCollection, {
-  userId: user.uid,
-  content: formData,
-  timestamp: new Date(),
-  userName: user.displayName,
-  userEmail: user.email,
-  // Add other user-related fields as needed
-    });
-    
+    const db = getFirestore();
+    const commentsCollection = collection(db, 'comments');
 
-    // If successful, display a success message or perform other actions
-    setSuccessMessage('Comment submitted successfully');
+    if (editComment) {
+      // If editComment state is set, update the existing comment
+      const commentRef = doc(db, 'comments', editComment.id);
+      await setDoc(commentRef, {
+        content: content, // Make sure content is set correctly
+        timestamp: new Date(),
+      });
+
+      // Update the local state with the edited comment
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === editComment.id
+            ? { ...comment, content: content, timestamp: new Date() }
+            : comment
+        )
+      );
+
+      // Clear editComment state after updating
+      setEditComment(null);
+      setSuccessMessage('Comment updated successfully');
+    } else {
+      // If editComment state is not set, add a new comment
+      const docRef = await addDoc(commentsCollection, {
+        userId: user.uid,
+        content: content,
+        timestamp: new Date(),
+        userName: user.displayName,
+        userEmail: user.email,
+      });
+
+      setComments((prevComments) => [
+        ...prevComments,
+        {
+          id: docRef.id,
+          userId: user.uid,
+          content: content,
+          timestamp: new Date(),
+          userName: user.displayName,
+          userEmail: user.email,
+        },
+      ]);
+
+      setSuccessMessage('Comment submitted successfully');
+    }
+
     setContent(''); // Clear the content after submission
   } catch (error) {
-    // Handle submission error, update error state
     console.error('Error during form submission:', error.message);
   }
 };
+
 
   const handleEdit = (event, comment) => {
     event.preventDefault();
     setContent(comment.content); 
     setEditComment(comment); 
     setAutoFocus(true);
+
     };
 
 return (
@@ -125,7 +155,7 @@ return (
 {isSignedIn ? (
 <div className="commentreg-box">
 <span className="navinfo-block">
-    <span className="navinfo">{user.firstName}</span>
+    <span className="navinfo">{isSignedIn.userName}</span>
   </span>
                         
 <button
@@ -179,9 +209,9 @@ disabled={!isSignedIn || !content}
 </button>
 
 
-{successMessage && <p className="error">{successMessage}</p>}
+{/* {successMessage && <p className="error">{successMessage}</p>} */}
 </form>
-<CommentList  handleEdit={handleEdit}  />
+<CommentList comments={comments} setComments={setComments} handleEdit={handleEdit} />
 
 </>
 )

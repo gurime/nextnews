@@ -1,4 +1,5 @@
 import { db } from '@/app/Config/firebase'
+import CommentForm from '@/app/components/CommentForm'
 import Footer from '@/app/components/Footer'
 import Navbar from '@/app/components/Navbar'
 import Goback from '@/app/components/goback'
