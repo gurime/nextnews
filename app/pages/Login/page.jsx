@@ -1,113 +1,24 @@
-'use client'
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
-import itcontrubte from '../../img/red_itruth_logo.png'
-import Image from 'next/image';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import {  signInWithEmailAndPassword } from 'firebase/auth';
-import Link from 'next/link';
-import { auth,db } from '@/app/Config/firebase';
+import LoginForm from './LoginForm';
+
+
+export const metadata = {
+  title: 'iTruth News - Login',
+  description: 'Stay informed with iTruth News - your reliable source for breaking news updates and the latest headlines. Explore in-depth analyses, timely coverage, and accurate insights across a wide range of topics. Your go-to platform for staying ahead in a rapidly evolving world.',
+  keywords: 'breaking news, latest news headlines, news updates, in-depth analyses, timely coverage, accurate insights, current events, global news'
+}
+
+
+
+
+
 export default function Login() {
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const [errorState, setErrorState] = useState(null);
-const [isInputValid, setIsInputValid] = useState(false);
-const [isLoading, setIsLoading] = useState(false);
 
-
-const router = useRouter()  
-
-const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      setIsLoading(true);
-      validateInputs();
-
-      // Firebase login
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-
-      router.back();
-    } catch (error) {
-      // Improve error handling, provide more specific messages
-      setErrorState('Please check your Email or Password');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-
-const validateInputs = () => {
-    if (email === '' || password === '') {
-    setIsInputValid(false);
-    } else {
-    setIsInputValid(true);
-    }
-    };
 return (
 <>
 <Navbar/>
-<div className='contribute-box'>
-<div className='contribute-leftbox' style={{ marginBottom: '10rem' }}>
-<Image src={itcontrubte} alt='...' priority />
-
-<form style={{width:'35rem'}} className='formbox' onSubmit={handleLogin}>
-<label htmlFor='email'>Email</label>
-<input
-type='email'
-id='email'
-value={email}
-onChange={(e) => {
-setEmail(e.target.value);
-validateInputs();}}
-/>
-
-<label htmlFor='password'>Password</label>
-<input
-type='password'
-id='password'
-value={password}
-onChange={(e) => {
-setPassword(e.target.value);
-validateInputs();}}
-/>
-<div
-className='payment-title'
-style={{
-display: 'flex',
-justifyContent: 'center'}}>
-<p>
-<Link href='/pages/Register'>Need An Account</Link>
-</p>
-</div>
-<div className='error'>{errorState && <p>{errorState}</p>}</div>
-<button type='submit' disabled={!isInputValid}> 
-Login
-</button>
-</form>
-</div>
-
-<div className='contribute-rightbox'>
-<h1>
-{' '}
-Support iTruthNews <br /> in the fight for <br /> honest news{' '}
-</h1>
-<p
-style={{
-lineHeight: '1.8',
-fontSize: '15px',
-borderTop: 'solid 1px gray'}}>
-{' '}
-It's never been more critical to have high-quality, independent news
-that is inviting to everyone. <br />
-To keep reporting in 2030, we'll need $1.05 million in funding.<br />
-Please consider donating to support iTruthNews.
-</p>
-</div>
-</div>
+<LoginForm/>
 <Footer/>
 </>
 )

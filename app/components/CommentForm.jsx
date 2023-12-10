@@ -151,24 +151,24 @@ return (
 <>
 <form className="postform" onSubmit={handleSubmit}>
 {isSignedIn ? (
-  <div className="commentreg-box">
-     {names.length === 2 && (
-      <>
-        <span className="navinfo">{names[0]}</span>
-        <span className="navinfo">{names[1]}</span>
-      </>
-     )}
-    <button
-      style={{
-        width: 'auto',
-        marginBottom: '4px',
-      }}
-      type="submit"
-      onClick={handleLogout}
-    >
-      Log out
-    </button>
-  </div>
+<div className="commentreg-box">
+{names.length === 2 && (
+<>
+<div className='navinfo-box'><span className="navinfo">{names[0]}</span>
+<span className="navinfo">{names[1]}</span></div>
+</>
+)}
+<button
+style={{
+width: 'auto',
+marginBottom: '4px',
+}}
+type="submit"
+onClick={handleLogout}
+>
+Log out
+</button>
+</div>
 ) : (
 <div className="commentreg-box">
 <button

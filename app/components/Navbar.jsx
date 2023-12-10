@@ -6,6 +6,8 @@ import navlogo from '../img/it.png'
 import { useEffect, useState } from "react"
 import Footer from "./Footer"
 import { collectionRoutes, getArticle } from "./Navapi/api"
+import { doc, getDoc, getFirestore } from "firebase/firestore"
+import { auth,db } from '@/app/Config/firebase';
 
 const Navbar = () => {
 const router = useRouter()
@@ -14,7 +16,8 @@ const [searchTerm, setSearchTerm] = useState('');
 const [searchResults, setSearchResults] = useState([]);
 const [isOverlayActive, setIsOverlayActive] = useState(false);
 const [loading, setLoading] = useState(false);
-
+const [isSignedIn, setIsSignedIn] = useState(false);
+const [names, setNames] = useState([]);
 const overlayStyle = {
 position: 'fixed',
 top: 0,
@@ -26,6 +29,43 @@ opacity:'.6',
 display: isOverlayActive ? 'block' : 'none',
 pointerEvents: 'none',
 };
+
+
+
+useEffect(() => {
+const unsubscribe = auth.onAuthStateChanged(async (user) => {
+setIsSignedIn(!!user);
+if (user) {
+try {
+// Fetch user data from Firestore
+const userData = await getUserData(user.uid);          
+setNames([userData.firstName, userData.lastName]);
+} catch (error) {
+console.error(error.message);
+}
+}
+});
+
+const getUserData = async (userId) => {
+try {
+const db = getFirestore();
+const userDocRef = doc(db, 'users', userId);
+const userDocSnapshot = await getDoc(userDocRef);    
+if (userDocSnapshot.exists()) {
+const userData = userDocSnapshot.data();
+return userData;
+} else {
+return null;
+}
+} catch (error) {
+console.error('Error fetching user data:', error.message);
+throw error;
+}
+};
+return () => unsubscribe();
+}, []);
+
+
   
 
 const handleSearch = async () => {
@@ -86,6 +126,21 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 </form>
 
 <div className="navlinks">
+{isSignedIn ? (
+<Link style={{ cursor: 'none', borderRight: 'solid 1px', padding: '0 5px' }} href='#!'>
+{names.length === 2 && (
+<>
+<span style={{ padding: '0 8px' }}>{names[0]}</span>
+<span>{names[1]}</span>
+</>
+)}
+</Link>
+) : (
+
+<span style={{padding:'0 5px', color:'#fff', borderRight: 'solid 1px'}}>Guest</span>
+)}
+
+
 <Link href="/">Home</Link>
 <Link href="/pages/Technology">Technology</Link>
 <Link href="/pages/Music">Music</Link>
@@ -95,7 +150,6 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 <Link href='#!' onClick={toggleFooter}>More:</Link>
 <button onClick={() => router.push('/pages/Contribute')} id="subbtn1">Contribute</button>
 </div>
-
 </div>
 {/* end of navbar */}
 

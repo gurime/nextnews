@@ -1,146 +1,19 @@
-'use client'
-import Link from 'next/link';
-import React, { useState } from 'react'
-import { auth, db } from '../../Config/firebase'; 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { updateProfile } from 'firebase/auth';
-import { sendEmailVerification } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
-import { useRouter } from 'next/navigation';
+import Footer from "@/app/components/Footer";
+import Navbar from "@/app/components/Navbar";
+import RegisterForm from "./RegisterForm";
 
-import itcontrubte from '../../img/red_itruth_logo.png'
-import Image from 'next/image';
-import Navbar from '@/app/components/Navbar';
-import Footer from '@/app/components/Footer';
+export const metadata = {
+  title: 'iTruth News - Register',
+  description: 'Stay informed with iTruth News - your reliable source for breaking news updates and the latest headlines. Explore in-depth analyses, timely coverage, and accurate insights across a wide range of topics. Your go-to platform for staying ahead in a rapidly evolving world.',
+  keywords: 'breaking news, latest news headlines, news updates, in-depth analyses, timely coverage, accurate insights, current events, global news'
+}
+
 export default function Register() {
-const [ firstName, setFirstName ] = useState('');
-const [ lastName, setLastName ]  = useState('');
-const [isLoading, setIsLoading] = useState(false);
-const [ email, setEmail ] = useState('');
-const [ password, setPassword ] = useState('');
-const [errorState, setErrorState] = useState(null);
-const [isInputValid, setIsInputValid] = useState(false);
-const router = useRouter();
-const handleRegister = async (e) => {
-  e.preventDefault();
 
-  try {
-    setIsLoading(true);
-
-    console.log('Attempting registration with:', email, password);
-
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('User registered successfully:', userCredential.user);
-
-    await updateProfile(auth.currentUser, {
-      displayName: `${firstName} ${lastName}`
-    });
-
-    await sendEmailVerification(auth.currentUser);
-
-    await setDoc(doc(db, 'users', userCredential.user.uid), {
-      firstName,
-      lastName,
-     
-    });
-
-    router.back();
-  } catch (error) {
-
-    if (error.code === 'auth/email-already-in-use') {
-      setErrorState('That email address is already in use.');
-    } else {
-      setErrorState(error.message || 'Please check your details and try again.');
-    }
-  } finally {
-    setIsLoading(false);
-  }
-};
-
-
-
-  const validateInputs = () => {
-    setIsInputValid(email !== '' && password !== '');
-  };
 return (
 <>
 <Navbar/>
-<div className='contribute-box' >
-<div className='contribute-leftbox'>
-<Image style={{cursor:'none'}}  src={itcontrubte} alt='...' />   
-
-<form className='formbox'onSubmit={handleRegister}>
-<div className='error'>{errorState && <p className='error-message'>{errorState}</p>}</div>
-
-{errorState && errorState.includes('email') && (
-  <p className='error-message'>{errorState}</p>
-)}
-<label htmlFor='fname'>First Name</label>
-<input type='text'  id='fname' value={firstName} onChange={(e) => setFirstName(e.target.value)} required  maxLength="50"/>
-
-
-<label htmlFor='lname'>Last Name</label>
-<input type='text'  id='lname' value={lastName} onChange={(e) => setLastName(e.target.value)} required maxLength="50"/>
-
-<label htmlFor='email'>Email</label>
-<input
-  type='email'
-  id='email'
-  value={email}
-  onChange={(e) => {
-    setEmail(e.target.value);
-    validateInputs();
-  }}
-  required
-  maxLength="254"
-  title="Please enter a valid email address"
-/>
-
-<label htmlFor='password'>Password</label>
-<input
-  type='password'
-  id='password'
-  value={password}
-  onChange={(e) => {
-    setPassword(e.target.value);
-    validateInputs();
-  }}
-  required
- 
-
-  minLength="8"
-  maxLength="100"
-  title="Password must be between 8 and 100 characters long and include symbols and numbers"
-/>
-
-<div 
-className="payment-title"
-style={{
- display:'flex',
- justifyContent:'center'   
-}}
->
-
-<p><Link  href='/pages/Login'>Already Have An Account</Link></p>
-</div>
-<div className='error'>{errorState && <p>{errorState}</p>}</div>
-<button type='submit' disabled={!isInputValid}> 
-Sign Up
-</button></form>
-</div>  
-
-
-<div className='contribute-rightbox'>
-<h1> Support iTruthNews <br/> 
-in the fight for   <br/> 
-honest news </h1>
-<p style={{lineHeight:'1.8',fontSize:'15px',borderTop:'solid 1px gray'}} >  It's never been more critical to have high-quality, independent news that is inviting to everyone. <br/>
-To keep reporting in 2030, we'll need $1.05 million in funding.<br/> 
-Please consider donating to support iTruthNews.
-</p>
-
-</div>
-</div>
+<RegisterForm/>
 <Footer/>
 </>
 )
