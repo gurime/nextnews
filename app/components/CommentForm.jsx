@@ -9,6 +9,8 @@ import { getAuth } from 'firebase/auth';
 export default function CommentForm() {
 const [isSignedIn, setIsSignedIn] = useState(false);
 const [content, setContent] = useState("");
+const [originalCollection, setOriginalCollection] = useState("");
+
 const [comments, setComments] = useState([]);
 const [successMessage, setSuccessMessage] = useState("");
 const [names, setNames] = useState([]);
@@ -28,37 +30,31 @@ const router = useRouter();
           const userData = await getUserData(user.uid);
           
           // Assuming userData contains a 'displayName' field
-          setNames([userData.displayName]);
+          setNames([userData.firstName, userData.lastName]);
         } catch (error) {
           console.error(error.message);
         }
       }
     });
 
-const getUserData = async (userId) => {
-try {
-// Access Firestore
-const db = getFirestore();
+    const getUserData = async (userId) => {
+      try {
+        const db = getFirestore();
+        const userDocRef = doc(db, 'users', userId);
+        const userDocSnapshot = await getDoc(userDocRef);
     
-// Example: Getting data from a 'users' collection based on user ID
-const userDocRef = doc(db, 'users', userId);
-const userDocSnapshot = await getDoc(userDocRef);
+        if (userDocSnapshot.exists()) {
+          const userData = userDocSnapshot.data();
+          return userData;
+        } else {
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+        throw error;
+      }
+    };
     
-// Check if the document exists
-if (userDocSnapshot.exists()) {
-// Access user data
-const userData = userDocSnapshot.data();
-return userData;
-} else {
-// Handle the case where the user document does not exist
-return null;
-}
-} catch (error) {
-console.error('Error fetching user data:', error.message);
-throw error; // Propagate the error for handling in the calling code
-}
-};
-
 // Cleanup function
 return () => unsubscribe();
 }, []);
@@ -79,21 +75,18 @@ const handleSubmit = async (e) => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    // Check if the user is signed in
-    if (!user) {
-      // Redirect to the login page if not signed in
-      router.push('/pages/Login');
-      return;
-    }
-
     const db = getFirestore();
-    const commentsCollection = collection(db, 'comments');
 
     if (editComment) {
       // If editComment state is set, update the existing comment
-      const commentRef = doc(db, 'comments', editComment.id);
+      const commentRef = doc(
+        db,
+        'comments',
+        editComment.collectionName,
+        editComment.id
+      );
       await setDoc(commentRef, {
-        content: content, // Make sure content is set correctly
+        content: content,
         timestamp: new Date(),
       });
 
@@ -111,13 +104,17 @@ const handleSubmit = async (e) => {
       setSuccessMessage('Comment updated successfully');
     } else {
       // If editComment state is not set, add a new comment
-      const docRef = await addDoc(commentsCollection, {
-        userId: user.uid,
-        content: content,
-        timestamp: new Date(),
-        userName: user.displayName,
-        userEmail: user.email,
-      });
+      const docRef = await addDoc(
+        collection(db, 'comments', originalCollection),
+        {
+          userId: user.uid,
+          content: content,
+          timestamp: new Date(),
+          userName: user.displayName,
+          userEmail: user.email,
+          collectionName: originalCollection, // Include the collection name
+        }
+      );
 
       setComments((prevComments) => [
         ...prevComments,
@@ -128,6 +125,7 @@ const handleSubmit = async (e) => {
           timestamp: new Date(),
           userName: user.displayName,
           userEmail: user.email,
+          collectionName: originalCollection,
         },
       ]);
 
@@ -153,21 +151,24 @@ return (
 <>
 <form className="postform" onSubmit={handleSubmit}>
 {isSignedIn ? (
-<div className="commentreg-box">
-<span className="navinfo-block">
-    <span className="navinfo">{isSignedIn.userName}</span>
-  </span>
-                        
-<button
-style={{
-width: 'auto',
-marginBottom: '4px',
-}}
-type="submit"
-onClick={handleLogout}>
-Log out
-</button> 
-</div>
+  <div className="commentreg-box">
+     {names.length === 2 && (
+      <>
+        <span className="navinfo">{names[0]}</span>
+        <span className="navinfo">{names[1]}</span>
+      </>
+     )}
+    <button
+      style={{
+        width: 'auto',
+        marginBottom: '4px',
+      }}
+      type="submit"
+      onClick={handleLogout}
+    >
+      Log out
+    </button>
+  </div>
 ) : (
 <div className="commentreg-box">
 <button

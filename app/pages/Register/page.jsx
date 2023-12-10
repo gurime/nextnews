@@ -22,35 +22,42 @@ const [errorState, setErrorState] = useState(null);
 const [isInputValid, setIsInputValid] = useState(false);
 const router = useRouter();
 const handleRegister = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      setIsLoading(true);
+  try {
+    setIsLoading(true);
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password,firstName,lastName);
-      const user = userCredential.user;
+    console.log('Attempting registration with:', email, password);
 
-      await updateProfile(auth.currentUser, {
-        displayName: `${firstName} ${lastName}`
-      });
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    console.log('User registered successfully:', userCredential.user);
 
-      await sendEmailVerification(auth.currentUser);
+    await updateProfile(auth.currentUser, {
+      displayName: `${firstName} ${lastName}`
+    });
 
-      await setDoc(doc(db, 'users', user.uid), {
-        firstName,
-        lastName,
-        email,
-        password
-      });
+    await sendEmailVerification(auth.currentUser);
 
-      router.push('/');
-    } catch (error) {
-      // Improve error handling, provide more specific messages
-      setErrorState('Please check your details and try again.');
-    } finally {
-      setIsLoading(false);
+    await setDoc(doc(db, 'users', userCredential.user.uid), {
+      firstName,
+      lastName,
+     
+    });
+
+    router.back();
+  } catch (error) {
+
+    if (error.code === 'auth/email-already-in-use') {
+      setErrorState('That email address is already in use.');
+    } else {
+      setErrorState(error.message || 'Please check your details and try again.');
     }
-  };
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
 
   const validateInputs = () => {
     setIsInputValid(email !== '' && password !== '');
@@ -63,8 +70,14 @@ return (
 <Image style={{cursor:'none'}}  src={itcontrubte} alt='...' />   
 
 <form className='formbox'onSubmit={handleRegister}>
+<div className='error'>{errorState && <p className='error-message'>{errorState}</p>}</div>
+
+{errorState && errorState.includes('email') && (
+  <p className='error-message'>{errorState}</p>
+)}
 <label htmlFor='fname'>First Name</label>
 <input type='text'  id='fname' value={firstName} onChange={(e) => setFirstName(e.target.value)} required  maxLength="50"/>
+
 
 <label htmlFor='lname'>Last Name</label>
 <input type='text'  id='lname' value={lastName} onChange={(e) => setLastName(e.target.value)} required maxLength="50"/>

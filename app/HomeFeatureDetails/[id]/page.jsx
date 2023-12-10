@@ -120,7 +120,7 @@ alt="..."
 
 
 </div>
-{/* <CommentForm/> */}
+<CommentForm/>
 
 
 

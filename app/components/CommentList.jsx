@@ -60,7 +60,7 @@ useEffect(() => {
       };
     } else {
       // Redirect to the login page if not signed in
-      router.push('/pages/Login');
+      // router.push('/pages/Login');
     }
   }, [router]); // Add router to the dependency array
 })
@@ -110,7 +110,7 @@ return (
 
 <>
 {comments.map((comment, index) => (
-  <div key={index} className='post-item'>
+  <div key={comment.id} className='post-item'>
     <h2 className='postuser-username'>{comment.userName}</h2>
     <div className='bodyBlock'>{comment.content}</div>
     <div className='date-block'>
@@ -125,7 +125,7 @@ return (
  )}
     </div>
     <div className='edit-delBlock'>
-      <button className='edit-btn' onClick={(event) => handleEdit(event, comment)}>Edit</button>
+      {/* <button className='edit-btn' onClick={(event) => handleEdit(event, comment)}>Edit</button> */}
       <button className='delete-btn' onClick={() => deletePost(comment.id)} type='button'>Delete</button>
     </div>
   </div>

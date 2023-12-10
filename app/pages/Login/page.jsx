@@ -5,8 +5,7 @@ import itcontrubte from '../../img/red_itruth_logo.png'
 import Image from 'next/image';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
-import {  signInWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth';
-import {  doc, setDoc } from 'firebase/firestore';
+import {  signInWithEmailAndPassword } from 'firebase/auth';
 import Link from 'next/link';
 import { auth,db } from '@/app/Config/firebase';
 export default function Login() {
@@ -15,8 +14,7 @@ const [password, setPassword] = useState('');
 const [errorState, setErrorState] = useState(null);
 const [isInputValid, setIsInputValid] = useState(false);
 const [isLoading, setIsLoading] = useState(false);
-const [firstName, setFirstName] = useState('');
-const [lastName, setLastName] = useState('');
+
 
 const router = useRouter()  
 
@@ -31,9 +29,8 @@ const handleLogin = async (e) => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Redirect user to home page after successful login
 
-      router.push('/');
+      router.back();
     } catch (error) {
       // Improve error handling, provide more specific messages
       setErrorState('Please check your Email or Password');
