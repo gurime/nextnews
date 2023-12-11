@@ -10,14 +10,11 @@ import { ClipLoader } from 'react-spinners';
 export default function CommentForm() {
 const [isSignedIn, setIsSignedIn] = useState(false);
 const [content, setContent] = useState("");
-const [originalCollection, setOriginalCollection] = useState("");
 const [ isLoading, setIsLoading] = useState(false)
 const [comments, setComments] = useState([]);
 const [successMessage, setSuccessMessage] = useState("");
 const [names, setNames] = useState([]);
-const [editComment, setEditComment] = useState(null);
 const [autoFocus, setAutoFocus] = useState(false);
-const [user, setUser] = useState("");
 
 const router = useRouter();
 
@@ -30,7 +27,6 @@ const router = useRouter();
           // Fetch user data from Firestore
           const userData = await getUserData(user.uid);
           
-          // Assuming userData contains a 'displayName' field
           setNames([userData.firstName, userData.lastName]);
         } catch (error) {
           console.error(error.message);
@@ -61,13 +57,7 @@ return () => unsubscribe();
 }, []);
 
 
-  const handleLogout = async () => {
-try {
-await auth.signOut();
-} catch (error) {
-console.error('Error during logout:', error.message);
-}
-};
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -76,79 +66,51 @@ const handleSubmit = async (e) => {
     const auth = getAuth();
     const user = auth.currentUser;
 
-    setIsLoading(true); 
+    setIsLoading(true);
 
     const db = getFirestore();
 
-    if (editComment) {
-      // If editComment state is set, update the existing comment
-      const commentRef = doc(
-        db,
-        'comments',
-        editComment.collectionName,
-        editComment.id
-      );
-      await setDoc(commentRef, {
+    // Add a new comment
+    const docRef = await addDoc(collection(db, 'comments'), {
+      userId: user.uid,
+      content: content,
+      timestamp: new Date(),
+      userName: user.displayName,
+      userEmail: user.email,
+    });
+
+    setComments((prevComments) => [
+      ...prevComments,
+      {
+        id: docRef.id,
+        userId: user.uid,
         content: content,
         timestamp: new Date(),
-      });
+        userName: user.displayName,
+        userEmail: user.email,
+      },
+    ]);
 
-      // Update the local state with the edited comment
-      setComments((prevComments) =>
-        prevComments.map((comment) =>
-          comment.id === editComment.id
-            ? { ...comment, content: content, timestamp: new Date() }
-            : comment
-        )
-      );
+    setSuccessMessage('Comment submitted successfully');
 
-      // Clear editComment state after updating
-      setEditComment(null);
-      setSuccessMessage('Comment updated successfully');
-    } else {
-      // If editComment state is not set, add a new comment
-      const docRef = await addDoc(
-        collection(db, 'article'),
-        {
-          userId: user.uid,
-          content: content,
-          timestamp: new Date(),
-          userName: user.displayName,
-          userEmail: user.email,
-        }
-      );
-
-      setComments((prevComments) => [
-        ...prevComments,
-        {
-          id: docRef.id,
-          userId: user.uid,
-          content: content,
-          timestamp: new Date(),
-          userName: user.displayName,
-          userEmail: user.email,
-        },
-      ]);
-
-      setSuccessMessage('Comment submitted successfully');
-    }
-
-    setContent(''); 
+    // Reset content state
+    setContent('');
   } catch (error) {
+    // Handle errors
+    console.error('Error submitting comment:', error);
   } finally {
-    setIsLoading(false)
+    setIsLoading(false);
   }
 };
 
 
-  const handleEdit = (event, comment) => {
-    event.preventDefault();
-    setContent(comment.content); 
-    setEditComment(comment); 
-    setAutoFocus(true);
-
-    };
-
+    const handleLogout = async () => {
+try {
+await auth.signOut();
+} catch (error) {
+console.error('Error during logout:', error.message);
+}
+};
 return (
 <>
 <form className="postform" onSubmit={handleSubmit}>
@@ -215,7 +177,7 @@ autoFocus={autoFocus}
 {/* {successMessage && <p className="error">{successMessage}</p>} */}
 </form>
 
-<CommentList comments={comments} setComments={setComments} handleEdit={handleEdit} />
+<CommentList comments={comments} setComments={setComments}  />
 
 </>
 )

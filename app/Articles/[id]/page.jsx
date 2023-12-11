@@ -1,66 +1,42 @@
-import { db } from '@/app/Config/firebase';
 import CommentForm from '@/app/components/CommentForm';
 import Footer from '@/app/components/Footer'
 import Navbar from '@/app/components/Navbar'
 import Goback from '@/app/components/goback'
 import Goup from '@/app/components/goup'
-import { doc, getDoc } from 'firebase/firestore';
+import { getArticle } from '../lib';
 
 
 
 export async function generateMetadata({ params }) {
-
-const docRef = doc(db, 'article', params.id);
-
+const articleId = params.id;
 try {
-const docSnap = await getDoc(docRef);
-    
-if (docSnap.exists()) {
-const post = docSnap.data();
-
+const articleDetails = await getArticle(articleId);
+if (articleDetails) {
 return {
-title: `iTruth News | ${post?.title || 'Page Not Found'}`
+title: `iTruth News | ${articleDetails.title || 'Page Not Found'}`,
 };
 } else {
 return {
-title: 'iTruth News | Page Not Found'
+title: 'iTruth News | Page Not Found',
 };
 }
 } catch (error) {
-console.error('Error getting document:', error);
 return {
-title: 'iTruth News | Page Not Found'
+title: 'iTruth News | Page Not Found',
 };
 }
 }
 
 
-async function getArticle(id) {
 
-const articleRef = doc(db, 'article', id);
-try {
-const docSnap = await getDoc(articleRef);
-if (docSnap.exists()) {
-return docSnap.data();
-} else {
-      
-console.error('Document not found');
-return null;
-}
-} catch (error) {
-console.error('Error getting document:', error);
-// Handle error as needed
-return null;
-}
-}
 
 
 
 export default async function HomeDetailsPage({params}) {
 const post = await getArticle(params.id)
 if (!post) {
-    return <div>Article not found</div>;
-    }
+return <div>Article not found</div>;
+}
     
 return (
 <>

@@ -90,7 +90,7 @@ placeItems: 'center',
 justifyContent: 'space-between',
 
 }}>
-<Link href={`Africa/HeadlineAfricaDetails/${blog.id}`}className="slugbtn btn">
+<Link href={`/Artilcles/${blog.id}`}className="slugbtn btn">
 <button className="card-button" rel="noreferrer">
 Read More
 </button>
