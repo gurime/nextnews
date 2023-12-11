@@ -1,16 +1,17 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
-import { auth,db } from '@/app/Config/firebase';
+import { auth } from '@/app/Config/firebase';
 import CommentList from './CommentList';
 import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { ClipLoader } from 'react-spinners';
 
 export default function CommentForm() {
 const [isSignedIn, setIsSignedIn] = useState(false);
 const [content, setContent] = useState("");
 const [originalCollection, setOriginalCollection] = useState("");
-
+const [ isLoading, setIsLoading] = useState(false)
 const [comments, setComments] = useState([]);
 const [successMessage, setSuccessMessage] = useState("");
 const [names, setNames] = useState([]);
@@ -75,6 +76,8 @@ const handleSubmit = async (e) => {
     const auth = getAuth();
     const user = auth.currentUser;
 
+    setIsLoading(true); 
+
     const db = getFirestore();
 
     if (editComment) {
@@ -105,14 +108,13 @@ const handleSubmit = async (e) => {
     } else {
       // If editComment state is not set, add a new comment
       const docRef = await addDoc(
-        collection(db, 'comments', originalCollection),
+        collection(db, 'article'),
         {
           userId: user.uid,
           content: content,
           timestamp: new Date(),
           userName: user.displayName,
           userEmail: user.email,
-          collectionName: originalCollection, // Include the collection name
         }
       );
 
@@ -125,16 +127,16 @@ const handleSubmit = async (e) => {
           timestamp: new Date(),
           userName: user.displayName,
           userEmail: user.email,
-          collectionName: originalCollection,
         },
       ]);
 
       setSuccessMessage('Comment submitted successfully');
     }
 
-    setContent(''); // Clear the content after submission
+    setContent(''); 
   } catch (error) {
-    console.error('Error during form submission:', error.message);
+  } finally {
+    setIsLoading(false)
   }
 };
 
@@ -200,18 +202,19 @@ value={content}
 onChange={(e) => setContent(e.target.value)}
 autoFocus={autoFocus}
 ></textarea>
-
-<button 
-className={isSignedIn ? "submitbtn" : "submitbtn disabled"} 
-type="submit" 
-disabled={!isSignedIn || !content} 
+<button
+  className={isSignedIn ? "submitbtn" : "submitbtn disabled"}
+  type="submit"
+  disabled={!isSignedIn || !content || isLoading}
 >
-  Comment
+  {isLoading ? <ClipLoader color='blue' /> : 'Comment'}
 </button>
+
 
 
 {/* {successMessage && <p className="error">{successMessage}</p>} */}
 </form>
+
 <CommentList comments={comments} setComments={setComments} handleEdit={handleEdit} />
 
 </>

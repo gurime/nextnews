@@ -6,7 +6,7 @@ import { updateProfile } from 'firebase/auth';
 import { sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import Spinner from 'react-spinners/ClipLoader'
+import ClipLoader from "react-spinners/ClipLoader";
 import Link from 'next/link';
 import itcontrubte from '../../img/it.png'
 import Image from 'next/image';
@@ -91,43 +91,43 @@ return (
 
 <label htmlFor='email'>Email</label>
 <input
-  type='email'
-  id='email'
-  value={email}
-  onChange={(e) => {
-    setEmail(e.target.value);
-    validateInputs();
-  }}
-  required
-  maxLength="254"
-  title="Please enter a valid email address"
+type='email'
+id='email'
+value={email}
+onChange={(e) => {
+setEmail(e.target.value);
+validateInputs();
+}}
+required
+maxLength="254"
+title="Please enter a valid email address"
 />
 
 <label htmlFor='password'>Password</label>
 <input
-  type='password'
-  id='password'
-  value={password}
-  onChange={(e) => {
-    setPassword(e.target.value);
-    validateInputs();
-    checkPasswordStrength(e.target.value);
-  }}
-  required
-  minLength="8"
-  maxLength="100"
-  title="Password must be between 8 and 100 characters long and include symbols and numbers"
+type='password'
+id='password'
+value={password}
+onChange={(e) => {
+setPassword(e.target.value);
+validateInputs();
+checkPasswordStrength(e.target.value);
+}}
+required
+minLength="8"
+maxLength="100"
+title="Password must be between 8 and 100 characters long and include symbols and numbers"
 />
 
 {/* Password strength indicator */}
 <div className={`password-strength ${passwordStrength.toLowerCase()}`}>
-  <span>Password Strength: {passwordStrength}</span>
+<span>Password Strength: {passwordStrength}</span>
 </div>
 <div 
 className="payment-title"
 style={{
- display:'flex',
- justifyContent:'center'   
+display:'flex',
+justifyContent:'center'   
 }}
 >
 
@@ -135,7 +135,7 @@ style={{
 </div>
 <div className='error'>{errorState && <p>{errorState}</p>}</div>
 <button type='submit' disabled={!isInputValid || isLoading}>
-  {isLoading ? <Spinner color='blue' /> : 'Register'}
+  {isLoading ? <ClipLoader color='blue' /> : 'Register'}
 </button>
 </form>
 </div>  

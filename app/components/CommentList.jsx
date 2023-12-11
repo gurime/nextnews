@@ -4,6 +4,7 @@ import {  collection, deleteDoc, getDocs, getFirestore, doc, query, where, onSna
 import moment from 'moment/moment';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react'
+import { ClipLoader } from 'react-spinners';
 
 export default function CommentList(props) {
     const [errorMessage, setErrorMessage] = useState("");
@@ -22,7 +23,7 @@ useEffect(() => {
       setUser(user);
 
       // Assuming you have a user property in the comments collection
-      const commentsCollection = collection(db, 'comments');
+      const commentsCollection = collection(db, 'article');
       const userCommentsQuery = query(commentsCollection, where("userId", "==", user.uid));
 
       const fetchData = async () => {
@@ -87,7 +88,7 @@ const deletePost = async (postId) => {
     await deleteDoc(commentDoc);
 
     setLoading(false);
-    setErrorMessage("Comment successfully deleted."); // Update success message
+    // setErrorMessage("Comment successfully deleted."); // Update success message
     setTimeout(() => { setErrorMessage(""); }, 3000);
   } catch (error) {
     console.error(error);
@@ -125,8 +126,11 @@ return (
  )}
     </div>
     <div className='edit-delBlock'>
-      {/* <button className='edit-btn' onClick={(event) => handleEdit(event, comment)}>Edit</button> */}
-      <button className='delete-btn' onClick={() => deletePost(comment.id)} type='button'>Delete</button>
+      {/* <button className='edit-btn' onClick={(event) => handleEdit(event, comment)}>      {loading ? <ClipLoader color='red' /> : 'Edit'}
+</button> */}
+      <button className='delete-btn' onClick={() => deletePost(comment.id)} type='button'>
+Delete    </button>
+    
     </div>
   </div>
 ))}

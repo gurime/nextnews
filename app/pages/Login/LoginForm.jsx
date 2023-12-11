@@ -1,12 +1,14 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
-import Link from 'next/link';
-import { auth,db } from '@/app/Config/firebase';
+import { auth } from '@/app/Config/firebase';
 import {  signInWithEmailAndPassword } from 'firebase/auth';
-import Spinner from 'react-spinners/ClipLoader'
+import Link from 'next/link';
+import ClipLoader from 'react-spinners/ClipLoader'
 import itcontrubte from '../../img/it.png'
 import Image from 'next/image';
+
+
 export default function LoginForm() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
@@ -74,7 +76,7 @@ justifyContent: 'center'}}>
 </div>
 <div className='error'>{errorState && <p>{errorState}</p>}</div>
 <button type='submit' disabled={!isInputValid || isLoading}>
-  {isLoading ? <Spinner color='blue' /> : 'Login'}
+  {isLoading ? <ClipLoader color='blue' /> : 'Login'}
 </button>
 </form>
 </div>
