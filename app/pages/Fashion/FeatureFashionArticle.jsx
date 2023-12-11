@@ -71,7 +71,7 @@ display: 'flex',
 placeItems: 'center',
 justifyContent: 'space-between',
 }}>
-<Link href={`Fashion/FeatureFashionDetails/${post.id}`}className="hero-btn">
+<Link href={`/Articles/${post.id}`}className="hero-btn">
 Read More
 </Link>
 {post.date}
