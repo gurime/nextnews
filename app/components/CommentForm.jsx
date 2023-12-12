@@ -14,7 +14,8 @@ const [ isLoading, setIsLoading] = useState(false)
 const [comments, setComments] = useState([]);
 const [successMessage, setSuccessMessage] = useState("");
 const [names, setNames] = useState([]);
-const [autoFocus, setAutoFocus] = useState(false);
+const [autoFocus, setAutoFocus] = useState(true);
+const [errorMessage, setErrorMessage] = useState('');
 
 const router = useRouter();
 
@@ -60,17 +61,21 @@ return () => unsubscribe();
 
 
 const handleSubmit = async (e) => {
+  // Prevent the default form submission behavior
   e.preventDefault();
 
   try {
+    // Get the current user from authentication
     const auth = getAuth();
     const user = auth.currentUser;
 
+    // Set loading state
     setIsLoading(true);
 
+    // Get Firestore instance
     const db = getFirestore();
 
-    // Add a new comment
+    // Add a new comment to the "comments" collection
     const docRef = await addDoc(collection(db, 'comments'), {
       userId: user.uid,
       content: content,
@@ -79,6 +84,7 @@ const handleSubmit = async (e) => {
       userEmail: user.email,
     });
 
+    // Update local state with the new comment details
     setComments((prevComments) => [
       ...prevComments,
       {
@@ -91,20 +97,25 @@ const handleSubmit = async (e) => {
       },
     ]);
 
+    // Set a success message
     setSuccessMessage('Comment submitted successfully');
 
     // Reset content state
     setContent('');
   } catch (error) {
-    // Handle errors
-    console.error('Error submitting comment:', error);
+    // Handle errors and log them
+    console.error('Error submitting comment:', error.message);
+
+    // Set an error message for the user
+    setError('Error submitting comment. Please try again.');
   } finally {
+    // Reset loading state
     setIsLoading(false);
   }
 };
 
 
-    const handleLogout = async () => {
+const handleLogout = async () => {
 try {
 await auth.signOut();
 } catch (error) {
@@ -162,7 +173,7 @@ placeholder='Type Your Message'
 required
 value={content}
 onChange={(e) => setContent(e.target.value)}
-autoFocus={autoFocus}
+autoFocus={autoFocus}  
 ></textarea>
 <button
   className={isSignedIn ? "submitbtn" : "submitbtn disabled"}
