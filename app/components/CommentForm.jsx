@@ -19,28 +19,14 @@ const [errorMessage, setErrorMessage] = useState('');
 
 const router = useRouter();
 
- useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      setIsSignedIn(!!user);
-
-      if (user) {
-        try {
-          // Fetch user data from Firestore
-          const userData = await getUserData(user.uid);
-          
-          setNames([userData.firstName, userData.lastName]);
-        } catch (error) {
-          console.error(error.message);
-        }
-      }
-    });
-
+useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged(async (user) => {
     const getUserData = async (userId) => {
       try {
         const db = getFirestore();
         const userDocRef = doc(db, 'users', userId);
         const userDocSnapshot = await getDoc(userDocRef);
-    
+
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
           return userData;
@@ -52,9 +38,22 @@ const router = useRouter();
         throw error;
       }
     };
-    
-// Cleanup function
-return () => unsubscribe();
+
+    setIsSignedIn(!!user);
+
+    if (user) {
+      try {
+        // Fetch user data from Firestore
+        const userData = await getUserData(user.uid);
+        setNames([userData.firstName, userData.lastName]);
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+  });
+
+  // Cleanup function
+  return () => unsubscribe();
 }, []);
 
 

@@ -286,7 +286,32 @@ color: #fff;}
 max-width: 80rem;
 margin: auto;
 }
- 
+
+.pagination{
+  display: flex;
+  justify-content: space-evenly;
+  place-items: center;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button.inactive {
+  background-color: #01356d;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
   
 .backbtn-box{
 display: flex;
