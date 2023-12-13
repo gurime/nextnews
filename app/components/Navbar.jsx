@@ -35,6 +35,7 @@ pointerEvents: 'none',
 useEffect(() => {
 const unsubscribe = auth.onAuthStateChanged(async (user) => {
 setIsSignedIn(!!user);
+
 if (user) {
 try {
 // Fetch user data from Firestore
@@ -45,6 +46,21 @@ console.error(error.message);
 }
 }
 });
+
+const handleDocumentClick = (e) => {
+const isClickOutsideSearch = !e.target.closest('.search-container');
+
+if (isClickOutsideSearch) {
+// Click is outside the search, close the overlay and reset search results
+setIsOverlayActive(false);
+setSearchResults([]);
+}
+};
+
+// Add event listener to the document body
+document.body.addEventListener('click', handleDocumentClick);
+
+
 
 const getUserData = async (userId) => {
 try {
@@ -62,9 +78,11 @@ console.error('Error fetching user data:', error.message);
 throw error;
 }
 };
-return () => unsubscribe();
-}, []);
-
+return () => {
+document.body.removeEventListener('click', handleDocumentClick);
+unsubscribe(); // Assuming you have an unsubscribe function
+};
+}, [searchTerm, isOverlayActive]);
 
   
 
