@@ -46,7 +46,7 @@ if (newComments.length > size) {
 newComments.pop();
 } 
 // Append new comments to existing ones
-setComments((prevComments) => [...prevComments, ...newComments]);  
+setComments(newComments);
 setLoading(false);
 } catch (error) {
 console.error('Error fetching comments:', error.message);
@@ -99,9 +99,7 @@ return (
       <div className="bodyBlock">{comment.content}</div>
       <div className='date-block'>
       <span>
-  {comment.timestamp instanceof Date
-    ? moment(comment.timestamp).format('MMMM Do YYYY, h:mm:ss a')
-    : comment.timestamp}
+  {comment.timestamp instanceof Date ? moment(comment.timestamp).format('MMMM Do YYYY, h:mma'): comment.timestamp}
 </span>
 
       </div>
@@ -130,7 +128,7 @@ return (
 <span>Page {pageNumber}</span>
 <button
   onClick={handleNextPageClick}
-  disabled={comments.length < pageSize || comments.length % pageSize !== 0 || loading}
+  disabled={comments.length % pageSize !== 0 || loading}
   className={pageNumber * pageSize >= comments.length ? 'inactive' : 'active'}
 >
   Next Page 

@@ -214,7 +214,7 @@ justify-content: space-between
 background-color: #8BC6EC;
 background: linear-gradient(180deg,#1691ad,#1c65be,#969fff);
 border-radius: 7px;
-padding: 5px 8px;
+padding: 5px;
 color: #fff;  
 font-weight: 300;
 }
@@ -295,22 +295,20 @@ margin: auto;
 
 .pagination button.active {
   background-color: #007bff;
-  color: #fff;
   padding: 8px 16px;
   border-radius: 5px;
-  border: none;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  letter-spacing: 1px;
 }
 
 .pagination button.inactive {
-  background-color: #01356d;
-  color: #fff;
-  padding: 8px 16px;
+  border: solid blue 1px;
+    padding: 8px 16px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-
+  letter-spacing: 1px;
+color: #000;
 }
   
 .backbtn-box{

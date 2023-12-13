@@ -47,8 +47,14 @@ useEffect(() => {
         const userData = await getUserData(user.uid);
         setNames([userData.firstName, userData.lastName]);
       } catch (error) {
+        handleError(error);
+
         console.error(error.message);
+      } finally {
+        setIsLoading(false)
       }
+     
+      
     }
   });
 
@@ -56,6 +62,16 @@ useEffect(() => {
   return () => unsubscribe();
 }, []);
 
+const handleError = (error) => {
+  if (error.code === 'network-error') {
+    setErrorMessage('Network error: Please check your internet connection.');
+  } else if (error.code === 'invalid-content') {
+    setErrorMessage('Invalid comment content. Please try again.');
+  } else {
+    setErrorMessage('Unexpected error occurred. Please try again later.');
+    console.error('Error submitting comment:', error.message);
+  }
+};
 
 
 
