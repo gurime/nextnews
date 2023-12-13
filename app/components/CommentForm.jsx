@@ -5,7 +5,7 @@ import { auth } from '@/app/Config/firebase';
 import CommentList from './CommentList';
 import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { ClipLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
 
 export default function CommentForm() {
 const [isSignedIn, setIsSignedIn] = useState(false);
@@ -179,7 +179,7 @@ autoFocus={autoFocus}
   type="submit"
   disabled={!isSignedIn || !content || isLoading}
 >
-  {isLoading ? <ClipLoader color='blue' /> : 'Comment'}
+  {isLoading ? <FadeLoader color='blue' /> : 'Comment'}
 </button>
 
 
