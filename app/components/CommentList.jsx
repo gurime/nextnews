@@ -2,7 +2,7 @@
 import {  collection, deleteDoc, getDocs, getFirestore, doc, query, startAfter, orderBy, limit } from 'firebase/firestore';
 import moment from 'moment/moment';
 import React, { useState, useEffect, useRef } from 'react'
-import { ClipLoader } from 'react-spinners';
+import { FadeLoader } from 'react-spinners';
 
 export default function CommentList(props) {
 const [errorMessage, setErrorMessage] = useState('');
@@ -118,7 +118,7 @@ return (
     </div>
 ))}
 </div>
-      {loading && <ClipLoader color="#36D7B7" loading={loading} size={50} />}
+      {loading && <FadeLoader color="blue" loading={loading} size={50} />}
       <div className="pagination">
       <button
   onClick={() => setPageNumber((prevPage) => Math.max(prevPage - 1, 1))}
