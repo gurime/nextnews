@@ -89,6 +89,9 @@ userEmail: user.email,
 },
 ]);
 setSuccessMessage('Comment submitted successfully');
+setTimeout(() => {
+  setSuccessMessage('');
+}, 3000);
 setContent('');
 } catch (error) {
 setErrorMessage('Error submitting comment. Please try again.');
