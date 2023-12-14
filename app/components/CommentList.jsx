@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import {  collection, deleteDoc, getDocs, getFirestore, doc, query, startAfter, orderBy, limit, where, getDoc } from 'firebase/firestore';
 import moment from 'moment/moment';
 import React, { useState, useEffect, useRef } from 'react'
-import { FadeLoader } from 'react-spinners';
+import { BeatLoader} from 'react-spinners';
 
 export default function CommentList(props) {
 const [errorMessage, setErrorMessage] = useState('');
@@ -57,58 +57,43 @@ setLoading(false);
 };
   
 
-const userIsAuthenticated = () => {
-  const auth = getAuth();
-  let isAuthenticated = false;
-
-  onAuthStateChanged(auth, (user) => {
-    isAuthenticated = !!user;
-  });
-
-  return isAuthenticated;
+const userIsAuthenticated = async () => {
+return new Promise((resolve) => {
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+const isAuthenticated = !!user;
+resolve(isAuthenticated);
+});
+});
 };
 
+
 const deletePost = async (postId, commentUserId) => {
-  try {
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
-
-
-    // Check if the current user is authenticated and is the owner of the comment
-    if (currentUser) {
-    
-
-      if (currentUser.uid === commentUserId) {
-
-        const db = getFirestore();
-
-        // Retrieve the comment document
-        const commentDoc = await getDoc(doc(db, 'comments', postId));
-
-
-        // Check if the comment exists
-        if (commentDoc.exists()) {
-          // If the conditions are met, proceed with deletion
-          await deleteDoc(doc(db, 'comments', postId));
-
-          // Assuming setComments is a function to update comments in the parent component
-          setComments((prevComments) => prevComments.filter((comment) => comment.id !== postId));
-          setSuccessMessage('Comment deleted successfully');
-          setTimeout(() => {
-            setSuccessMessage('');
-          }, 3000);
-        } else {
-          setErrorMessage('Comment not found');
-        }
-      } else {
-        // If the user is not the owner, handle accordingly
-        setErrorMessage('Unauthorized to delete this comment.');
-      }
-    } 
-  } catch (error) {
-    console.error('Error deleting comment:', error);
-    setErrorMessage('Error deleting comment. Please try again.');
-  }
+try {
+const auth = getAuth();
+const currentUser = auth.currentUser;
+const isAuthenticated = await userIsAuthenticated();
+if (currentUser) {
+if (currentUser.uid === commentUserId) {
+const db = getFirestore();
+const commentDoc = await getDoc(doc(db, 'comments', postId));
+if (commentDoc.exists()) {
+await deleteDoc(doc(db, 'comments', postId));
+setComments((prevComments) => prevComments.filter((comment) => comment.id !== postId));
+setSuccessMessage('Comment deleted successfully');
+setTimeout(() => {
+setSuccessMessage('');
+}, 3000);
+} else {
+setErrorMessage('Comment not found');
+}
+} else {
+setErrorMessage('Unauthorized to delete this comment.');
+}
+} 
+} catch (error) {
+setErrorMessage('Error deleting comment. Please try again.');
+}
 };
 
 
@@ -157,7 +142,7 @@ Delete
 </div>
 ))}
 </div>
-<div style={{display:'flex',placeContent:'center'}}>{loading && <FadeLoader color="green" loading={loading} size={50} />}</div>
+<div style={{display:'flex',placeContent:'center'}}>{loading && <BeatLoader color="blue" loading={loading}  />}</div>
 <div className="pagination">
 <button
 onClick={() => setPageNumber((prevPage) => Math.max(prevPage - 1,1))}

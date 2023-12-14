@@ -3,9 +3,9 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import { auth } from '@/app/Config/firebase';
 import CommentList from './CommentList';
-import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { FadeLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 
 export default function CommentForm({articleId}) {
 const [isSignedIn, setIsSignedIn] = useState(false);
@@ -163,7 +163,7 @@ autoFocus={autoFocus}></textarea>
 className={isSignedIn ? "submitbtn" : "submitbtn disabled"}
 type="submit"
 disabled={!isSignedIn || !content || isLoading}>
-{isLoading ? <FadeLoader color='blue' /> : 'Comment'}
+{isLoading ? <BeatLoader color='blue' /> : 'Comment'}
 </button>
 
 

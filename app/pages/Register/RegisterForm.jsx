@@ -6,7 +6,7 @@ import { updateProfile } from 'firebase/auth';
 import { sendEmailVerification } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
-import ClipLoader from "react-spinners/ClipLoader";
+import { BeatLoader } from 'react-spinners';
 import Link from 'next/link';
 import itcontrubte from '../../img/it.png'
 import Image from 'next/image';
@@ -135,7 +135,7 @@ justifyContent:'center'
 </div>
 <div className='error'>{errorState && <p>{errorState}</p>}</div>
 <button type='submit' disabled={!isInputValid || isLoading}>
-  {isLoading ? <ClipLoader color='blue' /> : 'Register'}
+  {isLoading ? <BeatLoader color='blue' /> : 'Register'}
 </button>
 </form>
 </div>  
