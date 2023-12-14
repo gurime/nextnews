@@ -8,24 +8,25 @@ import { getArticle } from '../lib';
 
 
 export async function generateMetadata({ params }) {
-const articleId = params.id;
-try {
-const articleDetails = await getArticle(articleId);
-if (articleDetails) {
-return {
-title: `iTruth News | ${articleDetails.title || 'Page Not Found'}`,
-};
-} else {
-return {
-title: 'iTruth News | Page Not Found',
-};
+  const articleId = params.id;
+  try {
+    const articleDetails = await getArticle(articleId);
+    if (articleDetails) {
+      return {
+        title: `iTruth News | ${articleDetails.title || 'Page Not Found'}`,
+      };
+    } else {
+      return {
+        title: 'iTruth News | Page Not Found',
+      };
+    }
+  } catch (error) {
+    return {
+      title: 'iTruth News | Page Not Found',
+    };
+  }
 }
-} catch (error) {
-return {
-title: 'iTruth News | Page Not Found',
-};
-}
-}
+
 
 
 
@@ -33,11 +34,15 @@ title: 'iTruth News | Page Not Found',
 
 
 export default async function HomeDetailsPage({params}) {
-const post = await getArticle(params.id)
-if (!post) {
-return <div>Article not found</div>;
-}
-    
+  const articleId = params.id;
+
+  // Fetch article details
+  const post = await getArticle(articleId);
+
+  if (!post) {
+    return <div>Article not found</div>;
+  }
+
 return (
 <>
 <Navbar />
@@ -100,7 +105,8 @@ alt="..."
 <p>{post.content8}</p>
 
 </div>
-<CommentForm/>
+
+<CommentForm articleId={articleId}/>
 
 
 

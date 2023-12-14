@@ -287,10 +287,19 @@ max-width: 80rem;
 margin: auto;
 }
 
+.momentDate{
+  font-size: 14px;
+}
+
 .pagination{
   display: flex;
   justify-content: space-evenly;
   place-items: center;
+  margin: 1rem 0;
+}
+
+.paginaation-page{
+margin: 0 1rem 0 1rem;
 }
 
 .pagination button.active {
@@ -344,7 +353,6 @@ width: 100%;
 height: auto;
 object-fit: cover;
 object-position: center;
-border-radius: 30px;
 }
     
 .flexdate{
@@ -384,6 +392,8 @@ box-shadow: 0 0 10px #00000033;
   margin-right: auto;
 
 }
+
+
 
 .navinfo{
 letter-spacing: 1px;
@@ -1118,6 +1128,24 @@ padding: 1rem;
   top: 38px;
   
   }
+
+  .pagination{
+    display: block;
+    margin: auto;
+  }
+
+  .pagination button.inactive{
+    margin: 0 0 0 1rem;
+    padding: 10px;
+  }
+  .pagination button.active{
+    margin: 0 0 0 1rem;
+    padding: 10px;
+  }
+
+  .paginaation-page{
+    margin: 0 1rem 0 1rem;
+    }
 }
 
    
