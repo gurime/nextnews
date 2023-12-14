@@ -1129,23 +1129,12 @@ padding: 1rem;
   
   }
 
-  .pagination{
-    display: block;
-    margin: auto;
-  }
 
-  .pagination button.inactive{
-    margin: 0 0 0 1rem;
-    padding: 10px;
-  }
-  .pagination button.active{
-    margin: 0 0 0 1rem;
-    padding: 10px;
-  }
+.authflex p{
+  padding: 4px;
+}
 
-  .paginaation-page{
-    margin: 0 1rem 0 1rem;
-    }
+ 
 }
 
    
