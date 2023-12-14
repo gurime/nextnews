@@ -35,8 +35,6 @@ data.push({ collection: collectionNames[index], id: doc.id, ...docData });
 // Return the filtered articles
 return data;
 } catch (error) {
-// Handle errors by logging and re-throwing
-console.error('Error in getArticle:', error);
 throw error;
 }
 }

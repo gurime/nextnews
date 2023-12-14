@@ -1,17 +1,20 @@
 'use client'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import {  collection, deleteDoc, getDocs, getFirestore, doc, query, startAfter, orderBy, limit, where, getDoc } from 'firebase/firestore';
+import {  collection, deleteDoc, getDocs, getFirestore, doc, query, startAfter, orderBy, limit, where, getDoc, updateDoc } from 'firebase/firestore';
 import moment from 'moment/moment';
 import React, { useState, useEffect, useRef } from 'react'
 import { BeatLoader} from 'react-spinners';
+import EditCommentModal from './editCommentModel';
 
 export default function CommentList(props) {
 const [errorMessage, setErrorMessage] = useState('');
 const [loading, setLoading] = useState(true);
 const [pageNumber, setPageNumber] = useState(1); 
+const [editModalOpen, setEditModalOpen] = useState(false);
+const [editingComment, setEditingComment] = useState(null);
 const [successMessage, setSuccessMessage ] = useState()
-const commentsRef = useRef(null);
 const { comments, setComments, articleId } = props;
+const commentsRef = useRef(null);
 const pageSize = 5; // Adjust this based on the number of comments to display per page
 
 const fetchComments = async (page, size,articleId) => {
@@ -65,6 +68,57 @@ const isAuthenticated = !!user;
 resolve(isAuthenticated);
 });
 });
+};
+
+const editPost = (postId, userId) => {
+const commentToEdit = comments.find((comment) => comment.id === postId);
+if (commentToEdit) {
+const auth = getAuth();
+const currentUser = auth.currentUser;
+if (currentUser && currentUser.uid === commentToEdit.userId) {
+setEditingComment(commentToEdit);
+setEditModalOpen(true);
+} else {
+setErrorMessage('Unauthorized to edit this comment.');
+}
+} else {
+setErrorMessage('Comment not found');
+}
+};
+
+
+const handleEditModalSave = async (postId, editedContent) => {
+try {
+await updateComment(postId, editedContent);
+setEditModalOpen(false);
+} catch (error) {
+}
+};
+
+
+const handleEditModalCancel = () => {
+setEditModalOpen(false);
+};
+
+const updateComment = async (postId, editedContent,commentUserId) => {
+try {
+const db = getFirestore();
+const commentRef = doc(db, 'comments', postId);
+await updateDoc(commentRef, {
+content: editedContent,
+});
+setComments((prevComments) =>
+prevComments.map((comment) =>
+comment.id === postId ? { ...comment, content: editedContent } : comment
+)
+);
+setSuccessMessage('Comment updated successfully');
+setTimeout(() => {
+setSuccessMessage('');
+}, 3000);
+} catch (error) {
+setErrorMessage('Error updating comment. Please try again.');
+}
 };
 
 
@@ -121,7 +175,15 @@ fetchComments(pageNumber, pageSize, articleId);
           
 return (
 <>
+{editModalOpen && (
+<EditCommentModal
+comment={editingComment}
+onSave={handleEditModalSave}
+onCancel={handleEditModalCancel}/>
+)}
+
 {errorMessage && <p className="error">{errorMessage}</p>}
+{successMessage && <p className="error">{successMessage}</p>}
 <div ref={commentsRef} className="post-list">
 {comments.slice(0, pageSize * pageNumber).map((comment,index) => (
 <div key={`${comment.id}-${index}`} className="post-item">
@@ -133,6 +195,13 @@ return (
 </span>
 </div>
 <div className="edit-delBlock">
+<button
+              className="edit-btn"
+              onClick={() => editPost(comment.id, comment.userId)}
+              type="button"
+            >
+              Edit
+            </button>
 <button className="delete-btn" 
   onClick={() => deletePost(comment.id, comment.userId)}
   type="button">
