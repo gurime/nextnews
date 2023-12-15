@@ -1,10 +1,10 @@
 'use client'
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import {  collection, deleteDoc, getDocs, getFirestore, doc, query, startAfter, orderBy, limit, where, getDoc, updateDoc } from 'firebase/firestore';
-import moment from 'moment/moment';
 import React, { useState, useEffect, useRef } from 'react'
 import { BeatLoader} from 'react-spinners';
 import EditCommentModal from './editCommentModel';
+import moment from 'moment/moment';
 
 export default function CommentList(props) {
 const [errorMessage, setErrorMessage] = useState('');
@@ -196,15 +196,14 @@ onCancel={handleEditModalCancel}/>
 </div>
 <div className="edit-delBlock">
 <button
-              className="edit-btn"
-              onClick={() => editPost(comment.id, comment.userId)}
-              type="button"
-            >
-              Edit
-            </button>
+className="edit-btn"
+onClick={() => editPost(comment.id, comment.userId)}
+type="button">
+Edit
+</button>
 <button className="delete-btn" 
-  onClick={() => deletePost(comment.id, comment.userId)}
-  type="button">
+onClick={() => deletePost(comment.id, comment.userId)}
+type="button">
 Delete
 </button>
 </div>

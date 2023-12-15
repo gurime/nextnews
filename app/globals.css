@@ -1,7 +1,6 @@
 
 body,html {
 margin: 0;
-overflow-x: hidden;
 box-sizing: border-box;
 background-color: aliceblue;
 letter-spacing: 1px;
@@ -499,15 +498,73 @@ line-height: 2;
 letter-spacing: 1px;
 }
 
+@keyframes slideIn {
+0% {
+opacity: 0;
+transform: translate(-50%, -50%) translateY(100px); 
+}
+100% {
+opacity: 1;
+transform: translate(-50%, -50%) translateY(0);
+}
+}
+
 .edit-comment-modal {
 position: absolute;
 left: 50%;
+top: 50%;
 transform: translate(-50%, -50%);
-background: white;
-padding: 20px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+background: #515151;
+border-radius: 5px;
+padding: 2rem;
+width: 50%;
 z-index: 1000;
+animation: slideIn 0.5s ease-in-out;
 }
+
+
+.edit-comment-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Initial position off-screen */
+  background: #3b3b3b;
+  border-radius: 5px;
+  padding: 2rem;
+  width: 50%;
+  z-index: 1000;
+  animation: slideIn 0.5s ease-in-out; /* Use the defined animation */
+}
+
+
+.modal-content {
+  text-align: center;
+}
+
+.modal-header {
+display: flex;
+place-items: center;
+color: #fff;
+padding: 1rem 0;
+font-size: 1.2rem;
+letter-spacing: 1px;
+}
+
+.modal-textarea {
+margin-bottom: 1rem;
+border-radius: 5px;
+width: 100%;
+border: none;
+text-indent: 7px;
+font-size: 14px;
+resize: none;
+}
+
+.modal-buttons button {
+margin-right: 8px;
+}
+
+
 
 
 .edit-btn {
@@ -1141,6 +1198,10 @@ padding: 1rem;
 
 .authflex p{
   padding: 4px;
+}
+
+.edit-comment-modal{
+  width: 70%;
 }
 
  
