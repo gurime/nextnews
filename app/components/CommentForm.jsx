@@ -88,13 +88,16 @@ userName: user.displayName,
 userEmail: user.email,
 },
 ]);
-setSuccessMessage('Comment submitted successfully');
+setSuccessMessage('Comment created successfully');
 setTimeout(() => {
-  setSuccessMessage('');
+setSuccessMessage('');
 }, 3000);
 setContent('');
 } catch (error) {
 setErrorMessage('Error submitting comment. Please try again.');
+setTimeout(() => {
+setErrorMessage('');
+}, 3000);
 } finally {
 setIsLoading(false);
 }
@@ -104,6 +107,7 @@ setIsLoading(false);
 const handleLogout = async () => {
 try {
 await auth.signOut();
+router.push('/pages/Login')
 } catch (error) {
 }
 };
@@ -165,10 +169,8 @@ type="submit"
 disabled={!isSignedIn || !content || isLoading}>
 {isLoading ? <BeatLoader color='blue' /> : 'Comment'}
 </button>
-
-
-
-{successMessage && <p className="error">{successMessage}</p>}
+{errorMessage && <p className="error">{errorMessage}</p>}
+{successMessage && <p className="success">{successMessage}</p>}
 </form>
 
 <CommentList comments={comments} setComments={setComments} articleId={articleId}  />
