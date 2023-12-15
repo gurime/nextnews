@@ -154,17 +154,21 @@ setErrorMessage('Error deleting comment. Please try again.');
 
   
 const handleNextPageClick = async () => {
-try {
-// Increment the page number
-setPageNumber((prevPage) => prevPage + 1);  
-// Scroll to the top of the comments after clicking the "Next Page" button
-if (commentsRef.current) {
-commentsRef.current.scrollIntoView({ behavior: 'auto' });
-}
-} catch (error) {
-setErrorMessage('Error fetching next page of comments. Please try again.');
-}
-};
+    try {
+      // Increment the page number
+      setPageNumber((prevPage) => prevPage + 1);
+  
+      // Scroll to the top of the comments after clicking the "Next Page" button
+      if (commentsRef.current) {
+        commentsRef.current.scrollIntoView({ behavior: 'auto' });
+      }
+    } catch (error) {
+      setErrorMessage('Error fetching next page of comments. Please try again.');
+    }
+  };
+  
+  
+  
   
 useEffect(() => {
 setComments([]); // Reset comments to empty array
