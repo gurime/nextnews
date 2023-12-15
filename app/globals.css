@@ -1124,12 +1124,9 @@ margin-bottom: 1rem;
 }
 
 .navlinks button{
-  margin-left: -1px;
+margin-left: -1px;
 }
 
-.sm-navbtn{
-  margin: 0 45px 0 0 !important;
-}
 
 .navlinks a{
 padding: 10px;
@@ -1139,7 +1136,7 @@ font-size: 13px;
 
 
 .body-content h1{
-  font-size: 20px;
+font-size: 20px;
 }
 
 
@@ -1170,10 +1167,6 @@ width: 90%;
 height: 300px;
 }
 
-.sm-navlink{
-  margin-left: 50px;
-}
-
 
 .formbox select{
 width: 50%;
@@ -1198,17 +1191,16 @@ padding: 1rem;
 }
 
 .search-results-container{
-  top: 38px;
-  
-  }
+top: 38px;
+}
 
 
 .authflex p{
-  padding: 4px;
+padding: 4px;
 }
 
 .edit-comment-modal{
-  width: 70%;
+width: 70%;
 }
 
  

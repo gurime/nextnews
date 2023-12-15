@@ -3,23 +3,43 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import contactimg from '../../img/contact-itruthnews.png';
+import { BeatLoader } from 'react-spinners';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '@/app/Config/firebase';
 
 
 
 export default function ContactForm() {
 const [isLoading, setIsLoading] = useState(false);
+const [isSignedIn, setIsSignedIn] = useState(false);
+
+const [user, setUser] = useState('');
 const [error, setError] = useState('');
 const [successMessage, setSuccessMessage] = useState('');
-const [values, setValues] = useState({name: '',email: '',subject: '',message: '',});
+const [fname, setFname] = useState();
+const [subject, setSubject] = useState();
+const [email, setEmail] = useState();
+const [content, setContent] = useState();
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-const handleSubmit = async () => {
   try {
     setIsLoading(true);
 
-    // Perform form submission logic, e.g., make API calls
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const db = getFirestore();
+ 
 
-    // If successful, display a success message
+    if (userDocSnapshot.exists()) {
+      const userData = userDocSnapshot.data();
+      // Do something with userData if needed
+    } else {
+      // Handle the case when the document doesn't exist
+    }
+
     setSuccessMessage('Form submitted successfully');
   } catch (error) {
     // Handle submission error, update error state
@@ -33,7 +53,7 @@ const handleSubmit = async () => {
     
 const handleChange = (e) => {
   const { name, value } = e.target;
-  setValues((prevValues) => ({
+  setContent((prevValues) => ({
     ...prevValues,
     [name]: value,
   }));
@@ -116,7 +136,7 @@ return (
     type="text"
     name="name"
     id='fname'
-    value={values.name}
+    value={fname}
     onChange={handleChange}
   />
 
@@ -125,7 +145,7 @@ return (
     id='email'
     type="email"
     name="email" 
-    value={values.email}
+    value={email}
     onChange={handleChange}
     onBlur={onBlur}
     aria-describedby="emailError"
@@ -136,7 +156,7 @@ return (
     id='subject'
     type="text"
     name="subject"
-    value={values.subject}
+    value={subject}
     onChange={handleChange}
     onBlur={onBlur}
     aria-describedby="subjectError"
@@ -148,15 +168,20 @@ return (
     id='message'
     name="message"
     rows={5}
-    value={values.message}
+    value={content}
     onChange={handleChange}
     onBlur={onBlur}
     aria-describedby="messageError"
   />
 
-  <button type="submit" disabled={isLoading || error}>
-    {isLoading ? 'Submitting...' : 'Submit'}
-  </button>
+<button
+  className={isSignedIn ? "submitbtn" : "submitbtn disabled"}
+  type="submit"
+  disabled={!isSignedIn || !content || isLoading}
+>
+  {isLoading ? <BeatLoader color='blue' /> : 'Comment'}
+</button>
+
 </form>
 
 {error && <p id="emailError" style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
