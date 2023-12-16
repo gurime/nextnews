@@ -101,7 +101,6 @@ setIsFooterVisible(!isFooterVisible);
 
 
 
-
 const getLink = (collection, id) => {
 const route = collectionRoutes[collection];
 return route ? `${route}/${id}` : '/';
@@ -144,6 +143,8 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 </form>
 
 <div className="navlinks">
+
+
 {isSignedIn ? (
 <Link style={{ cursor: 'none', borderRight: 'solid 1px', padding: '0 5px' }} href='#!'>
 {names.length === 2 && (
@@ -155,9 +156,11 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 </Link>
 ) : (
 
-<span style={{padding:'0 5px', color:'#fff', borderRight: 'solid 1px'}}>Guest</span>
-)}
+<span className="sm-name">
+Guest
 
+</span>
+)}
 
 <Link href="/">Home</Link>
 <Link href="/pages/Technology">Technology</Link>
@@ -167,7 +170,10 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 <Link href="/pages/Sports">Sports</Link>
 <Link href='#!' onClick={toggleFooter}>More:</Link>
 <button onClick={() => router.push('/pages/Contribute')} id="subbtn1">Contribute</button>
+
 </div>
+
+
 </div>
 {/* end of navbar */}
 
@@ -177,6 +183,8 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 <div style={{position:'absolute',width:'100%'}}>
 {isFooterVisible && <Footer />}</div>
 </div>
+
+
 {/* footer dropdown */}
 </>
 )

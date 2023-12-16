@@ -7,7 +7,7 @@ import { BeatLoader } from 'react-spinners';
 import { addDoc, collection, getDoc, getFirestore, doc } from 'firebase/firestore';
 import { auth, db } from '@/app/Config/firebase';
 import { getAuth } from 'firebase/auth';
-import ContactModal from './contactModal';
+import { useRouter } from 'next/navigation';
 
 export default function ContactForm() {
 const [names, setNames] = useState('');
@@ -20,8 +20,7 @@ const [isSignedIn, setIsSignedIn] = useState(false);
 const [errorMessage, setErrorMessage] = useState('');
 const [successMessage, setSuccessMessage] = useState('');
 const [autoFocus, setAutoFocus] = useState(true);
-const [editModalOpen, setEditModalOpen] = useState(false);
-
+const router = useRouter()
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       const getUserData = async (userId) => {
@@ -81,23 +80,14 @@ const [editModalOpen, setEditModalOpen] = useState(false);
         },
       ]);
   
-      setEditModalOpen(true);
-  
-      setTimeout(() => {
-        setEditModalOpen(false);
-      }, 5000);
-  
-      setSuccessMessage('Comment created successfully');
-      setTimeout(() => {
-        setSuccessMessage('');
-      }, 3000);
+   router.push('/pages/Contact/Confirmation')
   
       setNames('');
       setEmail('');
       setSubject('');
       setContent('');
     } catch (error) {
-      console.error('Error submitting form:', error);
+      
       setErrorMessage('Error submitting form. Please try again.');
       setTimeout(() => {
         setErrorMessage('');
@@ -112,8 +102,7 @@ const [editModalOpen, setEditModalOpen] = useState(false);
 
   return (
     <>
-    <ContactModal  />
-    {editModalOpen && <ContactModal  />}
+  
 
       <div className='contact_title_img'>
         <Link href='/'>
