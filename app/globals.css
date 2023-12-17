@@ -15,9 +15,10 @@ place-items:center;
 }
 
 
-.sm-name{padding: 0 5px;
-  color: #fff;
-  border-right: solid #fff 1px;
+.sm-name{
+padding: 0 5px;
+color: #fff;
+cursor: none;
 }
 .nav img{
 /* margin-right:auto; */
@@ -880,7 +881,7 @@ border-radius: 5px;
 width: 100%;
 border: solid 1px #aa0202;
 text-indent: 7px;
-font-size: 14px;
+font-size: 18px;
 }
 
 .formbox button{
@@ -1095,7 +1096,7 @@ padding: 1rem 0;
       
     
 .navlinks button{
-  margin-left: -1px;
+  margin-left: 3px;
   }
   
   
@@ -1274,11 +1275,15 @@ border-bottom: solid 1px #fff;
  grid-template-columns: repeat(3, 1fr);
 }
 
-
+.sm-name{
+  border: none;
+}
  
 }
 @media(max-width:768px){
-
+.sm-navlink{
+  display: flex;
+}
   
  
 }

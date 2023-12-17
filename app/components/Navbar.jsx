@@ -146,11 +146,11 @@ setIsOverlayActive(e.target.value.trim().length > 0);
 
 
 {isSignedIn ? (
-<Link style={{ cursor: 'none', borderRight: 'solid 1px', padding: '0 5px' }} href='#!'>
+<Link  href='#!'>
 {names.length === 2 && (
 <>
-<span style={{ padding: '0 8px' }}>{names[0]}</span>
-<span>{names[1]}</span>
+<span className="sm-name" >{names[0]}</span>
+<span className="sm-name">{names[1]}</span>
 </>
 )}
 </Link>

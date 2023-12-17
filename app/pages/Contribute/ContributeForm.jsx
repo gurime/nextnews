@@ -1,9 +1,57 @@
-import React from 'react'
+'use client'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import itcontrubte from '../../img/it.png'
 import Image from 'next/image'
+import { BeatLoader } from 'react-spinners'
+import { doc, getDoc, getFirestore } from 'firebase/firestore'
+import { auth } from '@/app/Config/firebase'
 
 export default function ContributeForm() {
+const [isSignedIn, setIsSignedIn] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
+const [content, setContent] = useState("");
+const [autoFocus, setAutoFocus] = useState(true);
+const [firstName, setfirstName] = useState('');
+const [lastName, setlastName] = useState('');
+const [errorMessage, setErrorMessage] = useState('');
+const [successMessage, setSuccessMessage] = useState('');
+
+
+useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      const getUserData = async (userId) => {
+        try {
+          const db = getFirestore();
+          const userDocRef = doc(db, 'users', userId);
+          const userDocSnapshot = await getDoc(userDocRef);
+          if (userDocSnapshot.exists()) {
+            const userData = userDocSnapshot.data();
+            return userData;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          throw error;
+        }
+      };
+  
+      setIsSignedIn(!!user);
+  
+      if (user) {
+        try {
+          const userData = await getUserData(user.uid);
+          setfirstName(userData.names || ''); // Set names to userData.names or an empty string
+        } catch (error) {
+          setErrorMessage(error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    });
+  
+    return () => unsubscribe();
+  }, []);
 return (
 <>
 <div className='contribute-box'>
@@ -14,13 +62,23 @@ return (
 
 <div className='formbox'>
 <label htmlFor='fname'>Firstname</label>
-<input type='text'  id='fname'/>
+<input 
+type='text'  
+ name="fname"
+ value={firstName} onChange={(e) => setfirstName(e.target.value)} required
+/>
 <label htmlFor='lname'>Lastname</label>
-<input type='text'  id='lname'/>
+<input 
+type='text'  
+name='lname'
+value={lastName} onChange={(e) => setlastName(e.target.value)} required
+
+/>
 <div className="payment-title">
 <p style={{fontSize:'20px',fontWeight:'600'}}>Payment Method</p>
 <p>🔒Secure Transaction</p>
 </div>
+
 <fieldset className='form-radio-group' >
 
 <label className='form-radio-box'  htmlFor='1'>
@@ -65,7 +123,13 @@ id='2'/>
 </label>
 
 </fieldset>
-<button>Contriubte $10</button>
+
+<button
+className={isSignedIn ? "submitbtn" : "submitbtn disabled"}
+type="submit"
+disabled={!isSignedIn || !content || isLoading}>
+{isLoading ? <BeatLoader color='blue' /> : '$10'}
+</button>
 </div>
 </div>  
 
