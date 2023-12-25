@@ -155,7 +155,7 @@ setEmail(e.target.value);
             className={isSignedIn ? "submitbtn" : "submitbtn disabled"}
             type="submit"
             disabled={!isSignedIn || !content || isLoading}>
-            {isLoading ? <BeatLoader color='blue' /> : 'Comment'}
+            {isLoading ? <BeatLoader color='blue' /> : 'Submit'}
           </button>
 
         </form>
